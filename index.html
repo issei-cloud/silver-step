@@ -271,7 +271,12 @@ pre.code .l::before{counter-increment:ln;content:counter(ln);display:inline-bloc
 .hist b{font:800 1rem var(--f-display);margin-left:auto;font-variant-numeric:tabular-nums}
 .pass{font:800 .68rem var(--f-display);border-radius:999px;padding:1px 8px;background:var(--ok-soft);color:var(--ok)}
 .yours{font-size:.78rem;color:var(--muted);margin:6px 0 0}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* バックアップ */
+.bkbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bkbtns .btn{padding:10px 8px;font-size:.82rem}
+.bkbtns .btn[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.bk textarea{width:100%;box-sizing:border-box;font:500 .72rem/1.4 var(--f-mono);border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--code);color:var(--ink);resize:vertical;word-break:break-all}
+.bk textarea:focus{outline:2px solid var(--brand);outline-offset:1px}
 </style>
 </head>
 <body>
@@ -4730,17 +4735,49 @@ function today(){ const k = ymd(); return P.days[k] || (P.days[k] = {n:0, c:0, x
 function saveLocal(){ try { localStorage.setItem(LKEY, JSON.stringify(P)); } catch(e) {} }
 function save(){
   P.updatedAt = Date.now(); saveLocal();
-  if (cloud.ref) { clearTimeout(cloud.timer); cloud.timer = setTimeout(pushCloud, 1200); }
+  if (cloud.ref) { clearTimeout(cloud.timer); cloud.timer = setTimeout(() => { cloud.timer = null; pushCloud(); }, 1200); }
 }
-async function pushCloud(){
+/* 閉じる直前に、待っている保存をすぐ実行する */
+function flushSave(){ saveLocal(); if (cloud.timer) { clearTimeout(cloud.timer); cloud.timer = null; pushCloud(); } }
+async function pushCloud(retried){
   if (!cloud.ref) return;
   if (cloud.writing) { cloud.again = true; return; }
   cloud.writing = true;
-  try { await cloud.ref.set(JSON.parse(JSON.stringify(P))); cloud.state = 'cloud'; }
-  catch(e) { if (e && e.code === 'invalid_argument') { cloud.ref = null; cloud.state = 'device'; } }
+  try { await cloud.ref.set(JSON.parse(JSON.stringify(P))); cloud.state = 'cloud'; cloud.saved = Date.now(); }
+  catch(e) {
+    const code = e && e.code;
+    if (code === 'invalid_argument' || code === 'revoked' || code === 'not_granted') { cloud.ref = null; cloud.state = 'error'; }
+    else if (!retried) { cloud.writing = false; await new Promise(r => setTimeout(r, 700 + Math.random() * 800)); return pushCloud(true); }
+    else cloud.state = 'error';
+  }
   cloud.writing = false;
   if (cloud.again) { cloud.again = false; pushCloud(); }
   paintSync();
+}
+
+/* 2つの記録を1つにまとめる（どちらの記録も消さない） */
+function canon(v){ if (Array.isArray(v)) return '[' + v.map(canon).join(',') + ']'; if (v && typeof v === 'object') return '{' + Object.keys(v).sort().filter(k => k !== 'updatedAt').map(k => JSON.stringify(k) + ':' + canon(v[k])).join(',') + '}'; return JSON.stringify(v); }
+function mergeP(a, b){
+  const m = blank(), A = a.days || {}, B = b.days || {};
+  new Set([...Object.keys(A), ...Object.keys(B)]).forEach(k => {
+    const x = A[k], y = B[k];
+    if (!x || !y) { m.days[k] = JSON.parse(JSON.stringify(x || y)); return; }
+    const d = {}; ['n','c','xp','peek','easy','rv','conq'].forEach(f => d[f] = Math.max(x[f] || 0, y[f] || 0));
+    d.chs = [...new Set([...(x.chs || []), ...(y.chs || [])])].sort(); d.ms = [...new Set([...(x.ms || []), ...(y.ms || [])])];
+    m.days[k] = d;
+  });
+  const qa = a.qs || {}, qb = b.qs || {};
+  new Set([...Object.keys(qa), ...Object.keys(qb)]).forEach(id => { const x = qa[id] || {n:0, c:0}, y = qb[id] || {n:0, c:0}; m.qs[id] = {n:Math.max(x.n, y.n), c:Math.max(x.c, y.c)}; });
+  const fa = a.found || [], fb = b.found || [], ca = a.conquered || [], cb = b.conquered || [];
+  m.conquered = [...new Set([...ca, ...cb])];
+  m.found = [...new Set([...fa, ...fb])].filter(id => !((ca.includes(id) && !fa.includes(id)) || (cb.includes(id) && !fb.includes(id))));
+  const seen = new Set();
+  m.exams = [...(a.exams || []), ...(b.exams || [])].filter(x => { const key = [x.date, x.kind, x.total, x.correct, x.used].join('|'); if (seen.has(key)) return false; seen.add(key); return true; }).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : 0).slice(-50);
+  m.exam = a.exam && b.exam ? (a.exam.elapsed >= b.exam.elapsed ? a.exam : b.exam) : (a.exam || b.exam || null);
+  const dayXp = Object.values(m.days).reduce((s, d) => s + (d.xp || 0), 0);
+  m.xp = Math.max(a.xp || 0, b.xp || 0, dayXp);
+  m.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
+  return m;
 }
 async function connectCloud(){
   try {
@@ -4752,18 +4789,56 @@ async function connectCloud(){
     const ref = db.doc('data/users/' + id + '/progress');
     const snap = await Promise.race([ref.get(), new Promise((_, rej) => setTimeout(() => rej({code:'timeout'}), 10000))]);
     cloud.ref = ref; cloud.state = 'cloud';
-    if (snap.exists) {
-      const d = snap.data();
-      if (d && d.v === 1 && (d.updatedAt || 0) > (P.updatedAt || 0)) {
-        P = Object.assign(blank(), JSON.parse(JSON.stringify(d)));
-        saveLocal();
-        if (view !== 'play') render();
-      } else if ((P.updatedAt || 0) > (d.updatedAt || 0)) pushCloud();
-    } else if (P.updatedAt) pushCloud();
+    absorb(snap.exists ? snap.data() : null);
     paintSync();
   } catch(e) { paintSync(); }
 }
-function paintSync(){ const el = document.getElementById('sync'); if (el) el.textContent = cloud.state === 'cloud' ? '記録はあなたのアカウントに保存されています（スマホとPCで共通）' : '記録はこの端末に保存されています'; }
+/* アカウントの記録と、この端末の記録を合わせる（新しい方で上書きしない） */
+function absorb(d){
+  if (d && d.v === 1) {
+    const m = mergeP(P, d);
+    if (canon(m) !== canon(P)) { m.updatedAt = Date.now(); P = m; saveLocal(); if (view !== 'play' && view !== 'exam') render(); }
+    if (canon(P) !== canon(d)) pushCloud();
+  } else if (P.updatedAt) pushCloud();
+}
+async function pullCloud(){
+  if (!cloud.ref || cloud.writing || cloud.timer) return;
+  try { const snap = await cloud.ref.get(); absorb(snap.exists ? snap.data() : null); } catch(e) {}
+}
+const standalone = (() => { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch(e) { return false; } })();
+function savedAt(){ const t = cloud.saved || P.updatedAt; if (!t) return ''; const d = new Date(t); return '（最後の保存 ' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + '）'; }
+function paintSync(){
+  const el = document.getElementById('sync'); if (!el) return;
+  let t;
+  if (cloud.state === 'cloud') t = '記録はあなたのアカウントに保存されています（スマホとPCで共通）' + savedAt();
+  else if (cloud.state === 'error') t = 'アカウントへの保存がうまくいっていません。記録はこの端末に保存しています' + savedAt() + '。念のため「記録のバックアップ」を作っておくと安心です。';
+  else t = '記録はこの' + (standalone ? 'ホーム画面アプリ' : 'ブラウザ') + 'の中だけに保存されています' + savedAt() + '。' + (standalone ? 'Safari などで開いたページとは別の記録です。' : 'ホーム画面のアプリや別のブラウザとは別の記録です。') + 'ほかで開くときは「記録のバックアップ」で引っ越せます。';
+  el.textContent = t;
+}
+
+/* ============ バックアップ（文字で書き出し・貼り付けで戻す） ============ */
+function backupCode(){ const s = JSON.stringify(P); return 'SILVER1:' + btoa(unescape(encodeURIComponent(s))); }
+function readBackup(txt){
+  txt = String(txt || '').replace(/\s+/g, '');
+  const i = txt.indexOf('SILVER1:'); if (i < 0) return null;
+  try { const d = JSON.parse(decodeURIComponent(escape(atob(txt.slice(i + 8))))); return d && d.v === 1 && d.days ? d : null; } catch(e) { return null; }
+}
+function countN(p){ return Object.values(p.days || {}).reduce((s, d) => s + (d.n || 0), 0); }
+function restoreBackup(txt){
+  const d = readBackup(txt);
+  if (!d) { toast('バックアップの文字を読み取れませんでした'); return false; }
+  const before = countN(P), m = mergeP(P, d);
+  P = m; save(); flushSave();
+  const add = countN(P) - before;
+  toast(add > 0 ? '記録を合わせました（' + add + '問ぶん増えました）' : '記録を合わせました（増えた記録はありません）');
+  return true;
+}
+async function copyText(t, ta){
+  try { await navigator.clipboard.writeText(t); toast('コピーしました'); return; } catch(e) {}
+  if (ta) { ta.focus(); ta.select(); try { document.execCommand('copy'); toast('コピーしました'); return; } catch(e) {} }
+  toast('文字を長押しして、すべて選択からコピーしてください');
+}
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch(e) {}
 
 /* ============ 集計 ============ */
 const level = xp => { let L = 1, need = 60; while (xp >= need) { xp -= need; L++; need = 60 + (L - 1) * 30; } return {L, cur:xp, need}; };
@@ -5118,7 +5193,15 @@ function statsHTML(){
     '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">本番モードの記録</h3>' + (ex.length ? '<div class="hist">' + ex.map(h => '<div><span>' + h.date.slice(5).replace('-', '/') + '</span><span class="small muted">' + h.total + '問</span>' + (h.pct >= 65 ? '<span class="pass">合格ライン突破</span>' : '') + '<b>' + h.correct + '問 / ' + h.pct + '%</b></div>').join('') + '</div>' : '<p class="small muted" style="margin:0">まだありません。準備ができたら、ハーフ（30問）から試すのもおすすめです。</p>') + '</section>' +
     '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">章ごとのクリア</h3><div class="stack" style="gap:8px">' + chs + '</div></section>' +
     '<section class="card"><h3 style="font-size:.95rem;margin-bottom:10px">バッジ</h3><div class="badges">' + B.map(b => '<div class="bdg' + (b[1] ? ' on' : '') + '"><span class="md">' + I.star + '</span>' + esc(b[0]) + (b[1] ? '' : '<span style="font-weight:500">これから</span>') + '</div>').join('') + '</div></section>' +
+    backupHTML() +
     '<p class="sync" id="sync"></p></div>';
+}
+function backupHTML(){
+  let o = '<section class="card bk" id="backup"><h3 style="font-size:.95rem;margin-bottom:4px">記録のバックアップ</h3><p class="small muted" style="margin:0 0 10px">記録を文字にして書き出し、別のブラウザやアプリに貼り付けて戻せます。戻すときは、今ある記録と<b>合わせる</b>ので、どちらの記録も消えません。</p>' +
+    '<div class="bkbtns"><button class="btn ghost" data-bk="out" aria-pressed="' + (ui.bk === 'out') + '">バックアップを作る</button><button class="btn ghost" data-bk="in" aria-pressed="' + (ui.bk === 'in') + '">バックアップから戻す</button></div>';
+  if (ui.bk === 'out') o += '<p class="small" style="margin:12px 0 6px">この文字をすべてコピーして、メモアプリなどに保存してください。（解いた問題 ' + countN(P) + '問ぶん）</p><textarea id="bkout" readonly rows="4">' + esc(backupCode()) + '</textarea><button class="btn cta wide" data-bkcopy style="margin-top:8px">コピーする</button>';
+  if (ui.bk === 'in') o += '<p class="small" style="margin:12px 0 6px">コピーしておいたバックアップの文字を貼り付けてください。</p><textarea id="bkin" rows="4" placeholder="SILVER1: から始まる文字"></textarea><button class="btn cta wide" data-bkrestore style="margin-top:8px">この記録と合わせる</button>';
+  return o + '</section>';
 }
 
 function todayHTML(){
@@ -5203,8 +5286,17 @@ document.addEventListener('click', e => {
   if (b.hasAttribute('data-suspend')) { ui.sheet = null; save(); view = 'home'; render(); window.scrollTo({top:0}); toast('中断しました。ホームの「続きから再開」で戻れます'); return; }
   if (b.hasAttribute('data-examsubmit')) { submitExam(false); return; }
   if (b.dataset.xrf) { ui.xrFilter = b.dataset.xrf; ui.revOpen = null; render(); return; }
+  /* バックアップ */
+  if (b.dataset.bk) { ui.bk = ui.bk === b.dataset.bk ? null : b.dataset.bk; render(); const s = document.getElementById('backup'); if (s) s.scrollIntoView({block:'start'}); return; }
+  if (b.hasAttribute('data-bkcopy')) { const ta = document.getElementById('bkout'); copyText(ta.value, ta); return; }
+  if (b.hasAttribute('data-bkrestore')) { const ta = document.getElementById('bkin'); if (restoreBackup(ta.value)) { ui.bk = null; render(); } return; }
 });
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && view === 'exam' && P.exam) save(); });
+/* 画面を離れる・閉じるときは、すぐに保存する */
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { if (view === 'exam' && P.exam) save(); flushSave(); }
+  else pullCloud();
+});
+window.addEventListener('pagehide', flushSave);
 
 render();
 setTimeout(connectCloud, 0);
