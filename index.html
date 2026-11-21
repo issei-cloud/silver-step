@@ -277,6 +277,106 @@ pre.code .l::before{counter-increment:ln;content:counter(ln);display:inline-bloc
 .bkbtns .btn[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
 .bk textarea{width:100%;box-sizing:border-box;font:500 .72rem/1.4 var(--f-mono);border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--code);color:var(--ink);resize:vertical;word-break:break-all}
 .bk textarea:focus{outline:2px solid var(--brand);outline-offset:1px}
+/* あそぶ */
+.nav div{grid-template-columns:repeat(5,1fr)}
+.sleepy-cta{display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit}
+.sleepy-cta b{display:block;font:800 .98rem var(--f-display)}
+.sleepy-cta small{display:block;color:var(--muted);font-size:.8rem;line-height:1.5}
+.sleepy{background:var(--find-soft);border-color:transparent}
+.sleepy h3{font-size:1rem;color:var(--find)}
+.sleepy p{margin:4px 0 6px;font-size:.88rem}
+.sleepy ul{margin:0;padding-left:1.2em;font-size:.85rem;display:grid;gap:2px}
+.sprint-card{background-color:var(--find);background-image:linear-gradient(135deg,var(--find),color-mix(in srgb,var(--find) 60%,var(--cta)));color:#fff;border:none}
+.sprint-card h2{font-size:1.3rem}
+.sprint-card p{margin:2px 0 12px;font-size:.88rem;opacity:.95}
+.sprint-card .btn{background:#fff;color:var(--find);font-size:1.05rem}
+.bestbadge{background:rgba(255,255,255,.18);border-radius:14px;padding:6px 12px;text-align:center;font:700 .7rem var(--f-display);flex:0 0 auto}
+.bestbadge b{display:block;font-size:1.5rem;line-height:1.1}
+.trgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.trcard{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:10px 12px;cursor:pointer;color:var(--ink);font:inherit}
+.trcard:active{transform:scale(.98)}
+.trcard b{font:800 .92rem var(--f-display)}
+.trcard small{color:var(--muted);font-size:.74rem;line-height:1.4}
+.trch{font:700 .66rem var(--f-display);color:var(--brand);background:var(--brand-soft);border-radius:999px;padding:0 8px}
+.stars{display:flex;gap:2px;margin-top:4px;font-size:.9rem;line-height:1}
+.stars i{font-style:normal;color:var(--line)}
+.stars i.on{color:var(--xp)}
+.stars.big{justify-content:center;font-size:2.4rem;gap:6px;margin-bottom:6px}
+.stars.big i.on{animation:starin .5s cubic-bezier(.3,1.6,.5,1) both}
+.stars.big i:nth-child(2){animation-delay:.15s}.stars.big i:nth-child(3){animation-delay:.3s}
+@keyframes starin{from{transform:scale(0) rotate(-40deg)}to{transform:none}}
+
+/* ○×スプリント */
+.spwrap{display:flex;flex-direction:column;gap:14px;min-height:calc(100vh - 40px);min-height:calc(100dvh - 40px)}
+.countdown{font:800 7rem var(--f-display);text-align:center;color:var(--find);margin-top:22vh;animation:cd .65s ease-out}
+@keyframes cd{from{transform:scale(1.6);opacity:0}to{transform:none;opacity:1}}
+.sphead{display:flex;align-items:center;gap:10px}
+.sptimer{flex:1;height:12px;border-radius:999px;background:var(--line);overflow:hidden}
+.sptimer i{display:block;height:100%;background:var(--find);border-radius:999px}
+.sptimer i.hurry{background:var(--cta)}
+.spsec{font:800 1.2rem var(--f-mono);min-width:2ch;text-align:right;font-variant-numeric:tabular-nums}
+.spscore{display:flex;justify-content:space-between;align-items:center;font:700 .9rem var(--f-display);color:var(--muted)}
+.spscore b{font-size:1.4rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.combo{color:var(--xp);font:800 1rem var(--f-display)}
+.combo.hot{color:var(--cta);animation:pulse .6s ease-in-out infinite alternate}
+@keyframes pulse{to{transform:scale(1.12)}}
+.spcard{flex:1;min-height:180px;display:grid;place-items:center;text-align:center;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px 18px;font:700 1.18rem/1.6 var(--f-display);box-shadow:var(--shadow);overflow-wrap:anywhere;animation:cardin .22s ease-out}
+.spcard.good{animation:good .35s ease-out}
+.spcard.bad{animation:bad .4s ease-out}
+@keyframes cardin{from{transform:translateY(10px);opacity:.3}}
+@keyframes good{0%{border-color:var(--ok);background:var(--ok-soft);transform:scale(.97)}100%{transform:none}}
+@keyframes bad{0%,100%{transform:none}20%{transform:translateX(-10px);border-color:var(--cta)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(3px)}}
+.spbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.spb{height:96px;border-radius:22px;border:none;display:grid;place-items:center;cursor:pointer;touch-action:manipulation;transition:transform .08s}
+.spb:active{transform:scale(.94)}
+.spb.o{background:var(--ok-soft);color:var(--ok)}
+.spb.x{background:var(--cta-soft);color:var(--cta)}
+.spprev{min-height:64px;font-size:.82rem;line-height:1.5;border-radius:14px;padding:8px 12px;margin-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+.spprev b{display:block;font:800 .82rem var(--f-display)}
+.spprev.ok{background:var(--ok-soft)}.spprev.ok b{color:var(--ok)}
+.spprev.ng{background:var(--cta-soft)}.spprev.ng b{color:var(--cta)}
+.oxmiss{display:grid;gap:10px}
+.oxmiss>div{display:flex;gap:10px;align-items:flex-start;font-size:.86rem}
+.oxmiss b{display:block}
+.oxmiss span:not(.oxmark){color:var(--muted);font-size:.8rem}
+.oxmark{flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:800 1rem var(--f-display)}
+.oxmark.o{background:var(--ok-soft);color:var(--ok)}
+.oxmark.x{background:var(--cta-soft);color:var(--cta)}
+
+/* なりきりCPU */
+.trwrap{padding-bottom:20px}
+.trcode{margin:0}
+.trcode .l{transition:background .25s;border-left:4px solid transparent}
+.trcode .l.now{background:color-mix(in srgb,var(--xp) 28%,transparent);background-color:var(--xp-soft);border-left-color:var(--xp);font-weight:700}
+.trcode .l.now::before{content:"▶";color:var(--xp);opacity:1;counter-increment:ln}
+.trsay{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:.9rem;background:var(--brand-soft);color:var(--ink);border-radius:14px;padding:10px 12px}
+.trsay svg{flex:0 0 auto;color:var(--brand);width:20px;height:20px;margin-top:2px}
+.trstate{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:10px}
+.trstate h4{margin:0 0 4px;font:700 .72rem var(--f-display);color:var(--muted)}
+.vars{display:flex;flex-wrap:wrap;gap:6px}
+.var{display:flex;flex-direction:column;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:3px 9px;min-width:0}
+.var span{font:600 .66rem var(--f-mono);color:var(--muted)}
+.var b{font:800 1rem var(--f-mono);overflow-wrap:anywhere}
+.var.chg{border-color:var(--ok);animation:chg .6s ease-out}
+.var.chg b{color:var(--ok)}
+@keyframes chg{0%{transform:scale(1.18);background:var(--ok-soft)}100%{transform:none}}
+.console{background:#151b26;color:#d8f5e3;border-radius:10px;padding:8px 10px;font:600 .9rem var(--f-mono);min-height:42px;white-space:pre-wrap;overflow-wrap:anywhere}
+.console .muted{color:#7d8799;font-size:.72rem;font-weight:500}
+.caret{display:inline-block;width:7px;height:1em;background:#d8f5e3;vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.trq{margin:2px 0 0;font:800 1.05rem var(--f-display)}
+.tropts{display:grid;gap:8px}
+.tropt{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 14px;text-align:left;font:700 .98rem var(--f-mono);cursor:pointer;min-height:50px}
+.tropt:active{transform:scale(.98)}
+.tropt:disabled{cursor:default}
+.tropt.right{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.tropt.wrong{border-color:var(--cta);background:var(--cta-soft);color:var(--cta)}
+.tropt.pop{animation:chg .5s ease-out}
+.trwhy{border-radius:14px;padding:10px 12px;font-size:.88rem}
+.trwhy b{display:block;font:800 .92rem var(--f-display)}
+.trwhy.ok{background:var(--ok-soft)}.trwhy.ok b{color:var(--ok)}
+.trwhy.ng{background:var(--find-soft)}.trwhy.ng b{color:var(--find)}
+@media (prefers-reduced-motion: reduce){.spcard,.spcard.good,.spcard.bad,.countdown,.var.chg,.combo.hot,.stars.big i.on,.tropt.pop{animation:none}}
 </style>
 </head>
 <body>
@@ -804,6 +904,1048 @@ public class Sample {
  easy:'**積み木を3段積んで**、一番上が崩れたら、上から1段ずつ落ちていく。落ちるたびに「out」と声を出します。',
  words:[['throw','例外を投げる'],['呼び出しの積み重ね','メソッドの中で別のメソッドを呼ぶと、前の呼び出しは途中のまま待つ'],['IllegalArgumentException','引数がおかしいことを表す例外']],
  tip:'自分を呼ぶメソッドは、呼び出しを箱で積み上げて描く。'}
+];
+
+/* ---------- 追加の問題（各章8問・Java 21 で実行して確認済み） ---------- */
+const MORE = [
+/* ===== 第1章 Javaの概要 ===== */
+{id:'m1-1', ch:1, lv:1, tag:'main メソッドの形',
+ q:'プログラムの入口（最初に動く場所）として正しく書けている main メソッドはどれ？',
+ opts:['public static void main(String[] args)','public void main(String[] args)','public static int main(String[] args)','public static void Main(String[] args)'],
+ ans:0,
+ hint:'「公開・static・戻り値なし・main・String の配列」の5点セットです。',
+ one:'入口になれるのは **public static void main(String[] args)** だけ。1つ欠けても入口になりません。',
+ flow:['public：外から呼べる','static：インスタンスを作らずに呼べる','void：戻り値なし','main：名前は小文字の main','String[] args：文字列の配列を受け取る'],
+ easy:'お店の「正面玄関」の決まった形です。扉が1枚欠けていたり、看板が「Main」（大文字）だったりすると、お客さん（JVM）は玄関だと気づけません。',
+ words:[['static','インスタンスを作らなくても使える印'],['void','戻り値がないこと']],
+ tip:'選択肢は「static がない」「int を返す」「Main が大文字」をよく混ぜてきます。1語ずつ指差し確認。'},
+
+{id:'m1-2', ch:1, lv:1, tag:'ファイル名と public クラス',
+ q:'public class Dog { ... } と書いたソースファイルの名前として正しいものはどれ？',
+ opts:['Dog.java','dog.java','Dog.class','Main.java'],
+ ans:0,
+ hint:'public クラスの名前と、ファイル名の関係を思い出しましょう。大文字・小文字も区別されます。',
+ one:'**public クラスの名前 ＝ ファイル名**（拡張子は .java）。大文字・小文字も同じにします。',
+ flow:['public class Dog を見つける','ファイル名は Dog + .java','dog.java は小文字なのでダメ','.class はコンパイル後にできるファイル'],
+ easy:'public クラスはそのファイルの「表札」です。表札が Dog なら、家の名前も Dog.java にそろえます。',
+ tip:'.java は書くファイル、.class は javac が作るファイル。'},
+
+{id:'m1-3', ch:1, lv:1, tag:'コメントの書き方',
+ q:'Java のコメントとして使えないものはどれ？',
+ opts:['# ここはコメント','// ここはコメント','/* ここはコメント */','/** ここはコメント */'],
+ ans:0,
+ hint:'Java のコメントはすべて「/」で始まります。',
+ one:'Java のコメントは **//**、**/* */**、**/** */** の3種類。**#** は Python などの書き方で、Java では使えません。',
+ flow:['// は行の終わりまで','/* から */ までは何行でも','/** */ は説明書（Javadoc）用','# は Java にはない'],
+ tip:'ほかの言語の書き方が混ざっていたら、それがダミーの選択肢です。'},
+
+{id:'m1-4', ch:1, lv:2, tag:'コマンドライン引数',
+ q:'次のコマンドで実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        System.out.println(args.length + args[0]);
+    }
+}`,
+ cmd:'javac Main.java\njava Main a b c',
+ opts:['3a','4a','3Main','実行時に例外'],
+ ans:0,
+ hint:'クラス名の Main は args に入るでしょうか？ そして「数値 + 文字列」は何になるでしょう。',
+ one:'args に入るのは**クラス名のうしろ**の a b c だけ。length は 3、args[0] は "a"。数値 + 文字列は**つなげる**ので **3a**。',
+ flow:['java Main のうしろを見る：a b c','args = {"a","b","c"}','args.length は 3','args[0] は "a"','3 + "a" → "3a"'],
+ easy:'java Main は「Main さん、お願いします」という呼びかけ。そのうしろに渡したメモ（a b c）だけが args という封筒に入ります。',
+ words:[['args','コマンドで渡した文字列が入る配列'],['length','配列の要素数。() は付けない']],
+ tip:'args の数を数えるときは、クラス名の「うしろ」から数えます。'},
+
+{id:'m1-5', ch:1, lv:1, tag:'import が必要なクラス',
+ q:'import を書かないと使えないクラスはどれ？',
+ opts:['ArrayList','String','Math','System'],
+ ans:0,
+ hint:'java.lang パッケージのクラスは、import なしで使えます。',
+ one:'**java.lang** のクラス（String、Math、System など）は自動で読み込まれます。**ArrayList は java.util** なので import が必要です。',
+ flow:['String → java.lang','Math → java.lang','System → java.lang','ArrayList → java.util（import が必要）'],
+ easy:'java.lang は「最初から机の上に置いてある文房具」。ArrayList は「引き出し（java.util）にしまってある道具」なので、出して（import して）から使います。',
+ words:[['import','ほかのパッケージのクラスを短い名前で使えるようにする宣言'],['java.lang','import なしで使える基本のパッケージ']],
+ tip:'String・Math・System・Integer・Exception は java.lang。List・ArrayList・Scanner は java.util。'},
+
+{id:'m1-6', ch:1, lv:2, tag:'package と import の順番',
+ q:'ソースファイルの中の並び順として正しいものはどれ？',
+ opts:['package → import → class','import → package → class','class → package → import','package → class → import'],
+ ans:0,
+ hint:'「自分の住所」→「借りてくる道具」→「本体」の順です。',
+ one:'並びは **package → import → class** の順。package は**ファイルの先頭に1つだけ**書けます（コメントは前にあってもよい）。',
+ flow:['1行目：package（自分がどこに住んでいるか）','次に import（どこから道具を借りるか）','最後に class（本体）'],
+ easy:'手紙の書き方と同じです。差出人の住所（package）→ 同封するもの（import）→ 本文（class）。',
+ tip:'「package は先頭」が崩れていたら、即コンパイルエラーです。'},
+
+{id:'m1-7', ch:1, lv:1, tag:'public クラスの数',
+ q:'1つのソースファイルに書ける public なトップレベルクラスはいくつまで？',
+ opts:['1つまで','2つまで','いくつでも','1つも書けない'],
+ ans:0,
+ hint:'ファイル名と public クラスの名前の関係を思い出しましょう。',
+ one:'public クラスはファイル名と同じ名前にする決まりなので、**1ファイルに1つまで**。public でないクラスならいくつでも書けます。',
+ flow:['public クラスの名前＝ファイル名','ファイル名は1つしかない','だから public クラスも1つまで'],
+ tip:'「public でないクラス」は何個あっても OK、という点もセットで覚えます。'},
+
+{id:'m1-8', ch:1, lv:3, tag:'main のオーバーロード',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        main(5);
+    }
+    static void main(int x) {
+        System.out.println("int " + x);
+    }
+}`,
+ opts:['int 5','コンパイルエラー','何も表示されない','無限に呼び出されて実行時に例外'],
+ ans:0,
+ hint:'引数の型が違う同じ名前のメソッドは、一緒に書けるでしょうか。',
+ one:'main も普通のメソッドなので**オーバーロード**できます。入口は String[] 版、そこから main(5) で **int 版**が呼ばれ **int 5**。',
+ flow:['JVM は String[] 版の main から始める','main(5) を呼ぶ','引数が int なので main(int x) が選ばれる','"int " + 5 → int 5'],
+ easy:'同じ「main さん」でも、受け取る物（String の配列か、int か）が違えば別人です。5 という数を渡したので、数を受け取る main さんが返事をします。',
+ words:[['オーバーロード','名前が同じで引数の型や数が違うメソッドを並べること']],
+ tip:'「main は特別だから1つしか書けない」は誤解。入口になるのが String[] 版だけ、というだけです。'},
+
+/* ===== 第2章 データ型と文字列 ===== */
+{id:'m2-1', ch:2, lv:1, tag:'int から double へ',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        double b = a;
+        System.out.println(b);
+    }
+}`,
+ opts:['10.0','10','10.00','コンパイルエラー'],
+ ans:0,
+ hint:'小さい箱（int）から大きい箱（double）へは、そのまま入ります。double を表示すると小数点は付くでしょうか。',
+ one:'int → double は**自動で変換**されます。double を表示すると **10.0** のように小数点が付きます。',
+ flow:['a に 10 を入れる','b = a で double に変換','b は 10.0','表示：10.0'],
+ easy:'小さいコップの水を大きいコップに移すのはこぼれないので OK。ただ、大きいコップ（double）は「小数点の目盛り」付きなので 10.0 と表示されます。',
+ words:[['double','小数を入れられる型'],['自動変換','小さい型から大きい型へは何も書かずに入る']],
+ tip:'逆の double → int は自動では入らず、キャスト (int) が必要です。'},
+
+{id:'m2-2', ch:2, lv:1, tag:'charAt',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        String s = "Java";
+        System.out.println(s.charAt(1));
+    }
+}`,
+ opts:['a','J','v','実行時に例外'],
+ ans:0,
+ hint:'文字の番号は 0 から数えます。',
+ one:'文字の番号（インデックス）は **0 から**。J=0、a=1、v=2、a=3 なので charAt(1) は **a**。',
+ flow:['"Java" に番号を振る','J:0 a:1 v:2 a:3','charAt(1) → a'],
+ easy:'電車の0号車から数える感じです。先頭の J が「0号車」なので、1号車は a。',
+ words:[['charAt(n)','n 番目の1文字を取り出す'],['インデックス','0 から始まる番号']],
+ tip:'charAt・substring・配列はすべて 0 始まり。迷ったら紙に番号を振る。'},
+
+{id:'m2-3', ch:2, lv:2, tag:'数値 + char の落とし穴',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        String s = "Java";
+        System.out.println(s.length() + s.charAt(0));
+    }
+}`,
+ opts:['78','4J','5','コンパイルエラー'],
+ ans:0,
+ hint:'charAt が返すのは String ではなく char です。int + char は文字の連結でしょうか、足し算でしょうか。',
+ one:'charAt は **char** を返します。int + char は**数値の足し算**になり、J の文字コード 74 が使われるので 4 + 74 = **78**。',
+ flow:['s.length() → 4（int）','s.charAt(0) → \'J\'（char）','int + char は足し算','\'J\' は数値だと 74','4 + 74 → 78'],
+ easy:'char は「文字の顔をした数」です。文字列（String）が一つもない式では、文字としてではなく数として足し算されてしまいます。',
+ words:[['char','1文字を表す型。中身は数値（文字コード）'],['文字コード','文字に割り当てられた番号。A=65、J=74']],
+ tip:'+ の左右どちらかが String なら連結、どちらも数値（char 含む）なら足し算。'},
+
+{id:'m2-4', ch:2, lv:1, tag:'変数の宣言と型',
+ q:'コンパイルエラーになる宣言はどれ？',
+ opts:['int c = 3.5;','int a = 10;','double b = 10;','long d = 100;'],
+ ans:0,
+ hint:'小数を、整数しか入らない箱に入れようとしているのはどれでしょう。',
+ one:'3.5 は double。**double を int にそのまま入れることはできない**ので int c = 3.5; がコンパイルエラーです。',
+ flow:['int a = 10 → 整数を int に：OK','double b = 10 → 整数を double に：OK（10.0）','long d = 100 → 整数を long に：OK','int c = 3.5 → 小数を int に：NG'],
+ easy:'大きい物（小数）を小さい箱（int）に押し込もうとすると、Java が「はみ出すよ」と止めてくれます。',
+ tip:'入れる値の型と、箱の型を見比べる。大→小はキャストなしではダメ。'},
+
+{id:'m2-5', ch:2, lv:1, tag:'equals と ==',
+ q:'次のコードを実行したときの結果はどれ？（改行は空白で表しています）',
+ code:`public class Main {
+    public static void main(String[] args) {
+        String a = "hi";
+        String b = new String("hi");
+        System.out.println(a.equals(b));
+        System.out.println(a == b);
+    }
+}`,
+ opts:['true false','true true','false true','false false'],
+ ans:0,
+ hint:'equals は「中身」、== は「同じ物（同じ場所）か」を比べます。new は必ず新しい物を作ります。',
+ one:'**equals は中身**（どちらも hi なので true）、**== は同じオブジェクトか**（new で別物を作ったので false）。',
+ flow:['a は "hi"（共有の文字列）','b は new で作った別の "hi"','a.equals(b)：中身が同じ → true','a == b：別の物 → false'],
+ easy:'同じ本が2冊あるイメージ。内容（equals）は同じでも、1冊目と2冊目は別の本（== は false）です。',
+ words:[['equals','中身が同じか比べるメソッド'],['==','参照型では、同じオブジェクトを指しているかを比べる']],
+ tip:'new が出てきたら「== は false」を疑う。文字列の比較は equals。'},
+
+{id:'m2-6', ch:2, lv:2, tag:'ArrayList の操作',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        var list = new ArrayList<String>();
+        list.add("A");
+        list.add("B");
+        list.add(0, "C");
+        list.remove("A");
+        System.out.println(list);
+    }
+}`,
+ opts:['[C, B]','[A, B, C]','[B, C]','[C, A, B]'],
+ ans:0,
+ hint:'add(0, "C") は「0番目に割り込む」です。1行ずつリストの中身を書き出してみましょう。',
+ one:'1行ずつ追うと [A] → [A, B] → **[C, A, B]**（0番目に割り込み）→ "A" を消して **[C, B]**。',
+ flow:['add("A") → [A]','add("B") → [A, B]','add(0, "C") → [C, A, B]','remove("A") → [C, B]'],
+ easy:'行列に並ぶ人のイメージ。add は最後尾に並ぶ、add(0, …) は先頭に割り込む、remove("A") は A さんが列から抜ける。',
+ words:[['add(x)','最後に追加'],['add(i, x)','i 番目に割り込ませる'],['remove(x)','その要素を1つ取り除く']],
+ tip:'リスト問題は、1行ごとに [ ] の中身を書き出すのがいちばん確実です。'},
+
+{id:'m2-7', ch:2, lv:2, tag:'char の ++',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        char c = 'A';
+        c++;
+        System.out.println(c);
+    }
+}`,
+ opts:['B','66','A1','コンパイルエラー'],
+ ans:0,
+ hint:'char の中身は数値（文字コード）です。1 増やすと、どの文字になるでしょう。',
+ one:'char は中身が数値なので ++ できます。A（65）が 66 になり、char として表示されるので **B**。',
+ flow:['c = \'A\'（中身は 65）','c++ で 66','c は char のまま','表示：B'],
+ easy:'アルファベットの番号札を1つ進めるイメージ。A の次の札は B です。',
+ tip:'char 変数のまま表示すれば文字、int に入れたり数値と足したりすると数になります。'},
+
+{id:'m2-8', ch:2, lv:3, tag:'StringBuilder のチェーン',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        var sb = new StringBuilder("abc");
+        sb.append("de").reverse().insert(1, "-");
+        System.out.println(sb + " " + sb.length());
+    }
+}`,
+ opts:['e-dcba 6','a-bcde 6','e-dcba 5','edcba- 6'],
+ ans:0,
+ hint:'StringBuilder は自分自身を書き換えます。左から1つずつ処理しましょう。',
+ one:'abc → append で **abcde** → reverse で **edcba** → insert(1, "-") で **e-dcba**。長さは 6。',
+ flow:['"abc"','append("de") → "abcde"','reverse() → "edcba"','insert(1, "-") → "e-dcba"','length() → 6'],
+ easy:'粘土を左から順にこねていくイメージ。StringBuilder は String と違って、こねた結果がそのまま残ります。',
+ words:[['append','うしろに付け足す'],['reverse','逆さまにする'],['insert(i, s)','i 番目の前に s を差し込む']],
+ tip:'チェーン（.が続く書き方）は左から順番。途中経過を紙に書けば迷いません。'},
+
+/* ===== 第3章 演算子と条件分岐 ===== */
+{id:'m3-1', ch:3, lv:1, tag:'余りの %',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        System.out.println(10 % 3);
+    }
+}`,
+ opts:['1','3','3.33','0'],
+ ans:0,
+ hint:'% は「割った余り」を出す演算子です。',
+ one:'10 ÷ 3 = 3 あまり **1**。% は余りを返します。',
+ flow:['10 を 3 で割る','3 回入って 9','10 - 9 = 1','表示：1'],
+ easy:'10 個のあめを 3 人で同じ数ずつ分けると、1人 3 個で 1 個あまる。その「あまり」が %。',
+ tip:'偶数・奇数の判定（n % 2 == 0）でもよく出ます。'},
+
+{id:'m3-2', ch:3, lv:1, tag:'if と else',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int x = 5;
+        if (x > 3) {
+            System.out.println("big");
+        } else {
+            System.out.println("small");
+        }
+    }
+}`,
+ opts:['big','small','big small','何も表示されない'],
+ ans:0,
+ hint:'5 > 3 は true でしょうか、false でしょうか。',
+ one:'5 > 3 は **true** なので if 側の **big** だけが表示されます。else 側は動きません。',
+ flow:['x = 5','x > 3 → true','if の中を実行：big','else は飛ばす'],
+ easy:'分かれ道の看板。「3 より大きい人はこっち」。5 は大きいのでこっちの道（big）だけを通ります。',
+ tip:'if と else は「どちらか一方だけ」。両方動くことはありません。'},
+
+{id:'m3-3', ch:3, lv:1, tag:'+ と文字列',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        System.out.println(1 + 2 + "3");
+    }
+}`,
+ opts:['33','123','6','15'],
+ ans:0,
+ hint:'+ は左から順に計算します。最初の 1 + 2 は数値どうしです。',
+ one:'左から順に、1 + 2 = **3**（数値の足し算）→ 3 + "3" = **"33"**（文字列の連結）。',
+ flow:['1 + 2 → 3（どちらも数値）','3 + "3" → 文字列が出たので連結','"33"'],
+ easy:'左から順に、数字だけの間は電卓、文字列に出会った瞬間から「のり付け」に変わります。',
+ tip:'文字列が出てくる「前」は足し算、「後」は連結。'},
+
+{id:'m3-4', ch:3, lv:2, tag:'+ の連結と足し算',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        System.out.println(1 + 2 + "3" + 4 + 5);
+    }
+}`,
+ opts:['3345','12345','339','15'],
+ ans:0,
+ hint:'文字列 "3" が出てきたあとの + は、どうなるでしょう。',
+ one:'1 + 2 = 3（足し算）→ "33" → "334" → **"3345"**。文字列になったあとは、数値もすべて**連結**です。',
+ flow:['1 + 2 → 3','3 + "3" → "33"','"33" + 4 → "334"','"334" + 5 → "3345"'],
+ easy:'一度「のり付けモード」に入ったら、最後までのり付けのまま。途中で電卓に戻ることはありません。',
+ tip:'4 + 5 を先に計算させたいときは ( ) が必要。( ) がなければ左から。'},
+
+{id:'m3-5', ch:3, lv:2, tag:'&& の短絡評価',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int x = 0;
+        if (x != 0 && 10 / x > 1) {
+            System.out.println("A");
+        } else {
+            System.out.println("B");
+        }
+    }
+}`,
+ opts:['B','A','実行時に例外（ArithmeticException）','コンパイルエラー'],
+ ans:0,
+ hint:'&& は、左が false なら右を見ません。',
+ one:'x != 0 は **false**。&& は左が false の時点で結果が決まるので、**右の 10 / x は実行されない**。だから 0 で割る例外も出ず **B**。',
+ flow:['x != 0 → false','&& は右を見ない（短絡評価）','条件全体は false','else 側：B'],
+ easy:'「チケットを持っていて、かつ…」の確認で、チケットがない時点で係員はそれ以上聞きません。だから危ない計算まで進みません。',
+ words:[['短絡評価','左側だけで答えが決まったら、右側を実行しないこと'],['ArithmeticException','0 で割ったときなどに起きる例外']],
+ tip:'& 1つなら右も必ず実行されて、例外になります。&& と & の違いは頻出。'},
+
+{id:'m3-6', ch:3, lv:2, tag:'{ } のない if',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int x = 1;
+        if (x > 5)
+            System.out.print("A");
+            System.out.print("B");
+    }
+}`,
+ opts:['B','AB','何も表示されない','A'],
+ ans:0,
+ hint:'{ } がない if が支配するのは、すぐ下の「1文」だけです。字下げにだまされないで。',
+ one:'{ } がない if の範囲は**直後の1文だけ**。print("B") は字下げされていても if の外なので、必ず実行されて **B**。',
+ flow:['x > 5 → false','if の範囲は print("A") だけ → 飛ばす','print("B") は if の外 → 実行','表示：B'],
+ easy:'字下げは「見た目の飾り」で、Java は気にしません。{ } だけが本当の囲いです。',
+ tip:'{ } のない if・for・while は、字下げを無視して「直後の1文」だけ線で囲む。'},
+
+{id:'m3-7', ch:3, lv:1, tag:'条件演算子（三項演算子）',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int age = 20;
+        String s = age >= 18 ? "adult" : "child";
+        System.out.println(s);
+    }
+}`,
+ opts:['adult','child','true','コンパイルエラー'],
+ ans:0,
+ hint:'条件 ? A : B は、条件が true なら A、false なら B です。',
+ one:'age >= 18 は **true** なので、? のすぐ後ろの **adult** が選ばれます。',
+ flow:['age >= 18 → true','true なので ? の後ろ：adult','s = "adult"','表示：adult'],
+ easy:'「はい？ なら左、いいえ なら右」と覚えます。? が質問、: が「それ以外」。',
+ words:[['条件演算子','条件 ? 値1 : 値2 の形で、条件によって値を選ぶ']],
+ tip:'if-else を1行に縮めたもの、と思えば読みやすくなります。'},
+
+{id:'m3-8', ch:3, lv:3, tag:'複合代入とキャスト',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int x = 10;
+        x += 2.5;
+        System.out.println(x);
+    }
+}`,
+ opts:['12','12.5','13','コンパイルエラー'],
+ ans:0,
+ hint:'x = x + 2.5 ならエラーですが、+= には「自動で元の型に戻す」働きがあります。',
+ one:'+= などの複合代入は**自動でキャスト**されます。10 + 2.5 = 12.5 を int に戻すので小数点以下が切り捨てられ **12**。',
+ flow:['x + 2.5 → 12.5（double）','+= は (int) を自動で付ける','(int)12.5 → 12（切り捨て）','表示：12'],
+ easy:'+= は「お釣りが出ないように、自動で端数を切ってくれる店員さん」。x = x + 2.5 と書くと、店員さんがいないのでエラーです。',
+ words:[['複合代入','+= や -= のように、計算と代入をまとめた書き方'],['キャスト','型を変えること。int にすると小数点以下は切り捨て']],
+ tip:'x = x + 2.5 はコンパイルエラー、x += 2.5 は OK。セットで覚えましょう。'},
+
+/* ===== 第4章 繰り返し ===== */
+{id:'m4-1', ch:4, lv:1, tag:'for 文の基本',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        for (int i = 0; i < 3; i++) {
+            System.out.print(i);
+        }
+    }
+}`,
+ opts:['012','123','0123','01'],
+ ans:0,
+ hint:'i は 0 から始まり、i < 3 の間だけ回ります。3 は含まれるでしょうか。',
+ one:'i は **0 から始まり**、0・1・2 で表示。i が 3 になると i < 3 が false なので終わり、**012**。',
+ flow:['i = 0 → 0 < 3 → 表示 0','i = 1 → 表示 1','i = 2 → 表示 2','i = 3 → 3 < 3 は false → 終わり'],
+ easy:'「3 未満」の間だけ回る観覧車。0・1・2 の3回まわったら止まります。',
+ tip:'< なら最後の数は含まない、<= なら含む。'},
+
+{id:'m4-2', ch:4, lv:1, tag:'while 文',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int n = 3;
+        while (n > 0) {
+            System.out.print(n);
+            n--;
+        }
+    }
+}`,
+ opts:['321','3210','123','210'],
+ ans:0,
+ hint:'表示してから 1 減らします。n が 0 になったときはどうなるでしょう。',
+ one:'3 を表示 → 2 → 1 を表示。n が 0 になると n > 0 が false で終わるので **321**。',
+ flow:['n = 3 → 表示 3 → n = 2','表示 2 → n = 1','表示 1 → n = 0','0 > 0 は false → 終わり'],
+ easy:'ロケットのカウントダウン。3、2、1 と数えて、0 は言わずに発射（ループ終了）。',
+ tip:'「表示」と「減らす」のどちらが先かで答えが変わります。順番に注目。'},
+
+{id:'m4-3', ch:4, lv:1, tag:'拡張 for 文',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int[] a = {2, 4, 6};
+        int sum = 0;
+        for (int x : a) {
+            sum += x;
+        }
+        System.out.println(sum);
+    }
+}`,
+ opts:['12','6','246','3'],
+ ans:0,
+ hint:'for (int x : a) は、配列 a の中身を1つずつ x に入れて回します。',
+ one:'x に 2、4、6 が順番に入り、sum に足していくので 2 + 4 + 6 = **12**。',
+ flow:['x = 2 → sum = 2','x = 4 → sum = 6','x = 6 → sum = 12','表示：12'],
+ easy:'お皿（配列）からおかずを1つずつ取って（x）、お弁当箱（sum）に入れていくイメージ。',
+ words:[['拡張 for 文','for (型 変数 : 配列) の形で、要素を先頭から1つずつ取り出す']],
+ tip:'拡張 for は「番号」ではなく「中身」が x に入ります。'},
+
+{id:'m4-4', ch:4, lv:2, tag:'continue',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i % 2 == 0) continue;
+            System.out.print(i);
+        }
+    }
+}`,
+ opts:['135','24','12345','1'],
+ ans:0,
+ hint:'continue は「今回の残りを飛ばして、次の回へ」です。ループ自体は終わりません。',
+ one:'偶数のときは continue で表示を飛ばすので、奇数だけ表示されて **135**。',
+ flow:['i = 1 → 奇数 → 表示 1','i = 2 → 偶数 → continue（飛ばす）','i = 3 → 表示 3','i = 4 → 飛ばす','i = 5 → 表示 5'],
+ easy:'continue は「この曲はスキップ」。プレイリスト（ループ）は止まらず次の曲へ進みます。',
+ tip:'break は「ループを抜ける」、continue は「次の回へ」。違いを1文で言えるように。'},
+
+{id:'m4-5', ch:4, lv:2, tag:'break と while(true)',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int i = 0;
+        while (true) {
+            i += 3;
+            if (i > 10) break;
+        }
+        System.out.println(i);
+    }
+}`,
+ opts:['12','10','9','無限ループで終わらない'],
+ ans:0,
+ hint:'3 ずつ増やして、10 を「超えた」瞬間に止まります。',
+ one:'i は 3 → 6 → 9 → **12**。12 > 10 で break してループを抜けるので **12**。',
+ flow:['i = 3（10 以下）','i = 6','i = 9','i = 12 → 12 > 10 → break','表示：12'],
+ easy:'3 段飛ばしで階段を上り、10 段目を超えたところで止まる。ちょうど 10 には止まれないので 12 段目。',
+ tip:'while(true) でも break があれば止まります。「どの値で抜けるか」を数える。'},
+
+{id:'m4-6', ch:4, lv:2, tag:'do-while は最低1回',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int n = 10;
+        do {
+            System.out.print(n);
+            n++;
+        } while (n < 5);
+    }
+}`,
+ opts:['10','何も表示されない','1011121314','コンパイルエラー'],
+ ans:0,
+ hint:'do-while は、条件を調べる前に中身を1回実行します。',
+ one:'do-while は**先に1回実行してから**条件を調べます。10 を表示 → 11 < 5 は false で終わり、**10**。',
+ flow:['まず中身を実行：表示 10','n = 11','11 < 5 → false','ループ終わり'],
+ easy:'「とりあえず1口食べてから、おかわりするか決める」のが do-while。while は「食べる前に決める」。',
+ tip:'do-while の最後の ; を忘れるとコンパイルエラー。これもよく狙われます。'},
+
+{id:'m4-7', ch:4, lv:1, tag:'配列の長さと初期値',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int[] a = new int[5];
+        System.out.println(a.length + " " + a[0]);
+    }
+}`,
+ opts:['5 0','4 0','5 null','実行時に例外'],
+ ans:0,
+ hint:'new int[5] は「5つ分の箱」。何も入れていない int の箱には何が入っているでしょう。',
+ one:'長さは **5**。int の配列は自動で **0** が入るので a[0] は 0。表示は **5 0**。',
+ flow:['new int[5] → [0, 0, 0, 0, 0]','a.length → 5','a[0] → 0','表示：5 0'],
+ easy:'新品の5マスの卵パック。int のパックには最初から「0」が入っています。',
+ words:[['初期値','配列を作ったときに自動で入る値。int は 0、boolean は false、参照型は null']],
+ tip:'length は「個数」、最後の番号は length - 1。'},
+
+{id:'m4-8', ch:4, lv:3, tag:'二重ループの回数',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int c = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = i; j < 3; j++) {
+                c++;
+            }
+        }
+        System.out.println(c);
+    }
+}`,
+ opts:['6','9','3','4'],
+ ans:0,
+ hint:'内側の j は i から始まります。i ごとに内側が何回まわるか数えましょう。',
+ one:'内側の回数は i = 0 で 3 回、i = 1 で 2 回、i = 2 で 1 回。合計 3 + 2 + 1 = **6**。',
+ flow:['i = 0：j = 0,1,2 → 3回','i = 1：j = 1,2 → 2回','i = 2：j = 2 → 1回','合計 6'],
+ easy:'階段状に減っていくイメージ。1段目は3個、2段目は2個、3段目は1個のブロックを積みます。',
+ tip:'二重ループは「外側1回ごとに内側が何回か」を表にすると確実。'},
+
+/* ===== 第5章 クラス ===== */
+{id:'m5-1', ch:5, lv:1, tag:'インスタンスとフィールド',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class Dog {
+    String name;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.name = "Pochi";
+        System.out.println(d.name);
+    }
+}`,
+ opts:['Pochi','null','name','コンパイルエラー'],
+ ans:0,
+ hint:'new Dog() で作った犬に、名前を付けてから表示しています。',
+ one:'new で Dog の**インスタンス（実物）**を作り、d.name に "Pochi" を入れてから表示するので **Pochi**。',
+ flow:['new Dog() → 実物の犬ができる','d.name = "Pochi"','d.name を表示 → Pochi'],
+ easy:'クラスは「犬の設計図」、new は「設計図から本物の犬を作る」。作った犬に名札を付けて、その名札を読み上げています。',
+ words:[['クラス','設計図'],['インスタンス','設計図から new で作った実物'],['フィールド','インスタンスが持つデータ（変数）']],
+ tip:'「変数名.フィールド名」で、そのインスタンスのデータを読み書きします。'},
+
+{id:'m5-2', ch:5, lv:1, tag:'フィールドの初期値',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class Cat {
+    int age;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new Cat().age);
+    }
+}`,
+ opts:['0','null','コンパイルエラー（初期化されていない）','実行時に例外'],
+ ans:0,
+ hint:'フィールドは、値を入れなくても自動で初期値が入ります。',
+ one:'**フィールド**は自動で初期化されます。int なので **0**。（メソッドの中の**ローカル変数**は自動で初期化されないので注意）',
+ flow:['new Cat() → age は自動で 0','.age を表示 → 0'],
+ easy:'新しい猫を作ると、年齢の欄には最初から「0」と書いてあります。空欄（エラー）にはなりません。',
+ tip:'フィールド＝自動で初期化、ローカル変数＝自分で入れないとコンパイルエラー。'},
+
+{id:'m5-3', ch:5, lv:2, tag:'コンストラクタとメソッドの違い',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class Box {
+    Box() {
+        System.out.print("A");
+    }
+    void Box() {
+        System.out.print("B");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        new Box();
+    }
+}`,
+ opts:['A','B','AB','コンパイルエラー'],
+ ans:0,
+ hint:'戻り値の型（void）が付いているものは、コンストラクタでしょうか。',
+ one:'**戻り値の型がない** Box() がコンストラクタ。**void Box() は名前がたまたま同じ普通のメソッド**で、new では呼ばれません。だから **A**。',
+ flow:['new Box() → コンストラクタを呼ぶ','Box() { print("A") } が動く','void Box() は呼ばれない','表示：A'],
+ easy:'コンストラクタは「誕生のあいさつ」。void が付いた方は、名前が似ているだけの別の芸で、頼まれないとやりません。',
+ words:[['コンストラクタ','new したときに自動で動く。クラスと同じ名前で、戻り値の型を書かない']],
+ tip:'クラス名と同じ名前でも、void などの型が付いていたらただのメソッド。'},
+
+{id:'m5-4', ch:5, lv:2, tag:'private へのアクセス',
+ q:'次のコードをコンパイル・実行したときの結果はどれ？',
+ code:`class Account {
+    private int money = 100;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new Account().money);
+    }
+}`,
+ opts:['コンパイルエラー','100','0','実行時に例外'],
+ ans:0,
+ hint:'private は「そのクラスの中だけ」で使えます。Main は Account の外です。',
+ one:'money は **private** なので **Account クラスの中からしか触れません**。Main から読もうとしているのでコンパイルエラー。',
+ flow:['money は private','読もうとしているのは Main クラス','クラスの外 → アクセスできない','コンパイルエラー'],
+ easy:'private は「自分の部屋の金庫」。家族（同じパッケージの別クラス）でも開けられません。',
+ words:[['private','同じクラスの中だけ'],['public','どこからでも'],['（何も書かない）','同じパッケージの中だけ']],
+ tip:'広い順に public → protected → 何もなし → private。'},
+
+{id:'m5-5', ch:5, lv:2, tag:'this がないと',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class P {
+    int x;
+    P(int x) {
+        x = x;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new P(5).x);
+    }
+}`,
+ opts:['0','5','コンパイルエラー','実行時に例外'],
+ ans:0,
+ hint:'コンストラクタの中の x は、フィールドの x と引数の x のどちらでしょう。',
+ one:'引数と同じ名前なので、x = x は**引数に引数を入れているだけ**。フィールドの x は初期値のまま **0**。this.x = x と書く必要があります。',
+ flow:['new P(5) → 引数 x = 5','x = x → 引数の x に引数の x（何も変わらない）','フィールド x は 0 のまま','表示：0'],
+ easy:'同じ名前の人が2人いたら、近くにいる人（引数）が呼ばれます。遠くの人（フィールド）を呼びたいときは「this.」と名字まで付けます。',
+ words:[['this','「自分自身のインスタンス」。this.x はフィールドの x']],
+ tip:'引数とフィールドが同じ名前なら this. があるかを必ず確認。'},
+
+{id:'m5-6', ch:5, lv:1, tag:'メソッドの戻り値',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    static int twice(int n) {
+        return n * 2;
+    }
+    public static void main(String[] args) {
+        System.out.println(twice(3) + 1);
+    }
+}`,
+ opts:['7','8','61','6'],
+ ans:0,
+ hint:'まず twice(3) が何を返すかを考え、その結果に 1 を足します。',
+ one:'twice(3) は 3 × 2 = **6** を返し、6 + 1 = **7**。',
+ flow:['twice(3) を呼ぶ','n = 3 → return 6','6 + 1 → 7','表示：7'],
+ easy:'twice は「2倍にして返してくれる機械」。3 を入れると 6 が出てくるので、そこに 1 を足します。',
+ words:[['return','値を呼び出し元に返して、メソッドを終える'],['引数','メソッドに渡す値']],
+ tip:'メソッド呼び出しは、まず戻ってくる値に置きかえてから式を読む。'},
+
+{id:'m5-7', ch:5, lv:2, tag:'可変長引数',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    static void f(int... a) {
+        System.out.print(a.length);
+    }
+    public static void main(String[] args) {
+        f();
+        f(1, 2);
+    }
+}`,
+ opts:['02','2','12','コンパイルエラー'],
+ ans:0,
+ hint:'int... は「0個以上の int」を配列として受け取ります。',
+ one:'可変長引数は**0個でも呼べます**。f() は長さ 0、f(1, 2) は長さ 2 なので **02**。',
+ flow:['f() → a は空の配列 → 0','f(1, 2) → a = {1, 2} → 2','print なので続けて表示：02'],
+ easy:'「何個でも入るふくろ」です。何も入れずに渡せば中身は0個、2個入れれば2個。',
+ words:[['可変長引数','型... の形。いくつでも引数を渡せて、中では配列になる']],
+ tip:'可変長引数は引数リストの最後に1つだけ書けます。'},
+
+{id:'m5-8', ch:5, lv:3, tag:'static で数える',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class C {
+    static int n = 0;
+    int id;
+    C() {
+        n++;
+        id = n;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        C a = new C();
+        C b = new C();
+        System.out.println(a.id + " " + b.id + " " + C.n);
+    }
+}`,
+ opts:['1 2 2','1 1 2','2 2 2','1 2 1'],
+ ans:0,
+ hint:'static の n はみんなで1つを共有、id はインスタンスごとに別々です。',
+ one:'n は**全員で共有**するので new のたびに増える。a 作成時は n = 1 → a.id = 1、b 作成時は n = 2 → b.id = 2。**1 2 2**。',
+ flow:['new C()（a）：n = 1、a.id = 1','new C()（b）：n = 2、b.id = 2','a.id = 1、b.id = 2、C.n = 2'],
+ easy:'static の n は「教室の黒板の数字」、id は「生徒それぞれのノート」。入ってきた順に黒板の数を増やし、自分のノートに写します。',
+ words:[['static フィールド','クラスに1つだけあり、全インスタンスで共有される']],
+ tip:'static は共有、static なしは個別。整理番号のパターンは定番です。'},
+
+/* ===== 第6章 継承とインタフェース ===== */
+{id:'m6-1', ch:6, lv:1, tag:'オーバーライドの基本',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class Animal {
+    void cry() { System.out.println("..."); }
+}
+class Dog extends Animal {
+    void cry() { System.out.println("wan"); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Dog();
+        a.cry();
+    }
+}`,
+ opts:['wan','...','... wan','コンパイルエラー'],
+ ans:0,
+ hint:'変数の型は Animal ですが、実際に作ったのは Dog です。メソッドはどちらが使われるでしょう。',
+ one:'メソッドは**実際に作ったもの（new Dog）**の方が使われます。Dog がオーバーライドした cry が動いて **wan**。',
+ flow:['new Dog() → 実物は犬','変数 a の型は Animal（入れ物）','a.cry() → 実物の Dog の cry','表示：wan'],
+ easy:'「動物」と書かれた箱に犬が入っています。鳴いてと頼むと、箱のラベルではなく中にいる犬が「wan」と鳴きます。',
+ words:[['extends','クラスを継承する'],['オーバーライド','親のメソッドを子で書き直すこと']],
+ tip:'メソッドは「中身（new したもの）」で決まる。これが第6章のいちばんの基本。'},
+
+{id:'m6-2', ch:6, lv:1, tag:'抽象クラスは new できない',
+ q:'次のコードをコンパイル・実行したときの結果はどれ？',
+ code:`abstract class Shape {
+    void show() { System.out.println("shape"); }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape s = new Shape();
+        s.show();
+    }
+}`,
+ opts:['コンパイルエラー','shape','何も表示されない','実行時に例外'],
+ ans:0,
+ hint:'abstract（抽象）クラスは「未完成の設計図」です。',
+ one:'**abstract クラスは new できません**。new Shape() の行でコンパイルエラー。子クラスを作って、そちらを new します。',
+ flow:['Shape は abstract','new Shape() → 未完成なので作れない','コンパイルエラー'],
+ easy:'「乗り物」という言葉だけでは実物は作れません。「自転車」や「車」など具体的な子クラスにして初めて作れます。',
+ words:[['abstract','抽象。未完成なので直接 new できない']],
+ tip:'抽象クラスの「型」として変数を作るのは OK（Shape s = new Circle();）。new だけがダメ。'},
+
+{id:'m6-3', ch:6, lv:1, tag:'継承できる数',
+ q:'Java のクラスについて正しい説明はどれ？',
+ opts:['extends できるクラスは1つだけ、implements できるインタフェースは複数','extends も implements も1つだけ','extends できるクラスは複数、implements は1つだけ','extends も implements もいくつでもできる'],
+ ans:0,
+ hint:'親クラスは1人だけ。でも「できること（インタフェース）」はいくつでも身につけられます。',
+ one:'**親クラスは1つだけ**（単一継承）。**インタフェースは複数** implements できます。',
+ flow:['class A extends B → 親は1つ','class A implements X, Y, Z → いくつでも','両方同時も OK：extends B implements X, Y'],
+ easy:'親（extends）は1人ですが、資格（implements）はいくつでも取れる、と覚えましょう。',
+ words:[['implements','インタフェースを実装する'],['インタフェース','「このメソッドを持っています」という約束']],
+ tip:'extends を先、implements をあとに書く順番も出ます。'},
+
+{id:'m6-4', ch:6, lv:2, tag:'super でメソッドを呼ぶ',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class A {
+    String hi() { return "A"; }
+}
+class B extends A {
+    String hi() { return super.hi() + "B"; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new B().hi());
+    }
+}`,
+ opts:['AB','B','BA','無限に呼び出されて実行時に例外'],
+ ans:0,
+ hint:'super.hi() は「親の hi()」です。自分自身を呼んでいるわけではありません。',
+ one:'super.hi() は**親クラス A の hi()** を呼んで "A" を返す。そこに "B" を付けて **AB**。',
+ flow:['new B().hi() → B の hi','super.hi() → A の hi → "A"','"A" + "B" → "AB"'],
+ easy:'子どもが「お父さんの得意技」を借りてから、自分の技を付け足すイメージ。',
+ words:[['super','親クラスのこと。super.メソッド() で親の版を呼ぶ']],
+ tip:'super. がなければ自分（B）の hi を呼ぶので、無限に呼び出しになります。'},
+
+{id:'m6-5', ch:6, lv:2, tag:'ラムダ式と Function',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`import java.util.function.Function;
+
+public class Main {
+    public static void main(String[] args) {
+        Function<Integer, Integer> f = x -> x * 2;
+        System.out.println(f.apply(5));
+    }
+}`,
+ opts:['10','5','x * 2','コンパイルエラー'],
+ ans:0,
+ hint:'x -> x * 2 は「x を受け取って x * 2 を返す」小さなメソッドです。apply で実行します。',
+ one:'ラムダ式 **x -> x * 2** は「受け取った値を2倍にする」処理。apply(5) で実行するので **10**。',
+ flow:['f に「2倍にする処理」を入れる','f.apply(5) → x = 5','5 * 2 → 10'],
+ easy:'ラムダ式は「名前のない小さな機械」。f という棚に置いておき、apply ボタンで動かします。',
+ words:[['ラムダ式','引数 -> 処理 の形で書く、名前のない小さなメソッド'],['Function<T, R>','T を受け取って R を返す。実行は apply']],
+ tip:'Function は apply、Predicate は test、Supplier は get、Consumer は accept。'},
+
+{id:'m6-6', ch:6, lv:2, tag:'Predicate',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`import java.util.function.Predicate;
+
+public class Main {
+    public static void main(String[] args) {
+        Predicate<String> p = s -> s.isEmpty();
+        System.out.println(p.test("") + " " + p.test("a"));
+    }
+}`,
+ opts:['true false','false true','true true','コンパイルエラー'],
+ ans:0,
+ hint:'Predicate は「true か false を返す判定」です。空文字 "" は空でしょうか。',
+ one:'Predicate は **test** で判定して boolean を返します。"" は空なので true、"a" は空でないので false。**true false**。',
+ flow:['p.test("") → "".isEmpty() → true','p.test("a") → false','"true" + " " + "false"'],
+ easy:'Predicate は「はい／いいえで答える係」。「からっぽ？」と聞かれて、"" には「はい」、"a" には「いいえ」。',
+ words:[['Predicate<T>','T を受け取って true/false を返す。実行は test'],['isEmpty()','文字列の長さが 0 なら true']],
+ tip:'ArrayList の removeIf(…) にも Predicate を渡します。'},
+
+{id:'m6-7', ch:6, lv:2, tag:'インタフェースの default メソッド',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`interface Greet {
+    default String hi() { return "hello"; }
+}
+class J implements Greet {
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(new J().hi());
+    }
+}`,
+ opts:['hello','コンパイルエラー（hi を実装していない）','null','実行時に例外'],
+ ans:0,
+ hint:'default が付いたメソッドは、インタフェースの中に中身があります。',
+ one:'**default メソッド**は中身付きなので、実装クラスで書かなくても使えます。J は何も書いていないが **hello**。',
+ flow:['Greet の hi は default（中身あり）','J は hi を書いていない','new J().hi() → Greet の中身を使う','表示：hello'],
+ easy:'インタフェースに「おまけの標準装備」が付いてくるイメージ。自分で用意しなくても、最初から使えます。',
+ words:[['default メソッド','インタフェースの中に書ける、中身付きのメソッド']],
+ tip:'中身のない（abstract な）メソッドだけが、実装クラスで必ず書くもの。'},
+
+{id:'m6-8', ch:6, lv:3, tag:'フィールドは型、メソッドは中身',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`class A {
+    String n = "A";
+    String get() { return n; }
+}
+class B extends A {
+    String n = "B";
+    String get() { return n; }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        A a = new B();
+        System.out.println(a.n + a.get());
+    }
+}`,
+ opts:['AB','BB','AA','BA'],
+ ans:0,
+ hint:'フィールドは「変数の型」、メソッドは「実際のインスタンス」で決まります。',
+ one:'a.n は変数の型 **A** の n → "A"。a.get() は実物 **B** の get → B の n → "B"。合わせて **AB**。',
+ flow:['変数 a の型は A、中身は B','a.n → 型で決まる → "A"','a.get() → 中身で決まる → B の get → "B"','"A" + "B" → AB'],
+ easy:'フィールドは「箱のラベル」を読む、メソッドは「中の人」に頼む。ラベルは A、中の人は B。',
+ tip:'合言葉「メソッドは中身、フィールドは見た目（型）」。'},
+
+/* ===== 第7章 例外処理 ===== */
+{id:'m7-1', ch:7, lv:1, tag:'配列の範囲外',
+ q:'次のコードを実行したときに起きる例外はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        int[] a = new int[3];
+        a[3] = 1;
+    }
+}`,
+ opts:['ArrayIndexOutOfBoundsException','NullPointerException','ArithmeticException','コンパイルエラーになる'],
+ ans:0,
+ hint:'長さ 3 の配列の番号は 0・1・2 です。',
+ one:'長さ 3 の配列に使える番号は **0〜2**。a[3] は範囲外なので **ArrayIndexOutOfBoundsException**。コンパイルは通ります。',
+ flow:['new int[3] → 番号は 0, 1, 2','a[3] → 存在しない番号','実行時に ArrayIndexOutOfBoundsException'],
+ easy:'3部屋しかないアパートで「3号室（4つ目）」を訪ねても、部屋はありません。',
+ words:[['ArrayIndexOutOfBoundsException','配列の範囲外の番号を使ったときの例外']],
+ tip:'番号の間違いはコンパイルでは見つからず、実行してから例外になります。'},
+
+{id:'m7-2', ch:7, lv:1, tag:'try-catch の流れ',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        try {
+            System.out.print("A");
+            int x = 1 / 0;
+            System.out.print("B");
+        } catch (ArithmeticException e) {
+            System.out.print("C");
+        }
+        System.out.print("D");
+    }
+}`,
+ opts:['ACD','ABCD','AC','ABD'],
+ ans:0,
+ hint:'例外が起きた行から下の try の中は、飛ばされます。',
+ one:'A を表示 → 1 / 0 で例外 → **B は飛ばして** catch へ → C → try-catch のあとの D。**ACD**。',
+ flow:['print("A")','1 / 0 → ArithmeticException','残りの print("B") は飛ばす','catch で print("C")','そのあと print("D")'],
+ easy:'料理中に皿を割ったら（例外）、残りの盛り付け（B）はやめて片付け（catch）へ。片付けたら次の料理（D）に進めます。',
+ words:[['try','例外が起きるかもしれない処理を囲む'],['catch','例外が起きたときの処理']],
+ tip:'例外の行より下の try 内は動かない。catch のあとは普通に続く。'},
+
+{id:'m7-3', ch:7, lv:1, tag:'例外が起きないとき',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        try {
+            System.out.print("A");
+        } catch (Exception e) {
+            System.out.print("B");
+        } finally {
+            System.out.print("C");
+        }
+    }
+}`,
+ opts:['AC','ABC','A','AB'],
+ ans:0,
+ hint:'例外が起きなければ catch は動きません。finally はどうでしょう。',
+ one:'例外が起きないので **catch は飛ばす**。finally は**必ず動く**ので **AC**。',
+ flow:['print("A")','例外なし → catch は飛ばす','finally → print("C")'],
+ easy:'catch は「事故が起きたときの係」なので、何もなければ出番なし。finally は「必ず戸締まりする係」。',
+ words:[['finally','例外があってもなくても、最後に必ず動く']],
+ tip:'finally は return があっても動きます（第7章の頻出）。'},
+
+{id:'m7-4', ch:7, lv:2, tag:'null のメソッド呼び出し',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        String s = null;
+        System.out.println(s.length());
+    }
+}`,
+ opts:['NullPointerException が発生する','0','null','コンパイルエラー'],
+ ans:0,
+ hint:'null は「何も指していない」状態です。何もないものの長さは測れるでしょうか。',
+ one:'s は **null（何も指していない）**。null に対してメソッドを呼ぶと **NullPointerException** が起きます。',
+ flow:['s = null','s.length() → 中身がないのに呼ぼうとする','NullPointerException'],
+ easy:'空っぽのリードを持って「お座り」と言っても、犬がいないので何も起きない…どころか Java は「犬がいない！」と叫びます。',
+ words:[['null','どのオブジェクトも指していないこと'],['NullPointerException','null に対してメソッドやフィールドを使ったときの例外']],
+ tip:'null を表示するだけ（println(s)）なら null と出るだけで例外にはなりません。'},
+
+{id:'m7-5', ch:7, lv:2, tag:'例外の親子関係',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        try {
+            Integer.parseInt("12a");
+            System.out.print("A");
+        } catch (IllegalArgumentException e) {
+            System.out.print("B");
+        }
+    }
+}`,
+ opts:['B','A','例外で止まって何も表示されない','コンパイルエラー'],
+ ans:0,
+ hint:'"12a" は数値にできません。起きる例外（NumberFormatException）の親は誰でしょう。',
+ one:'"12a" は数にできず **NumberFormatException**。これは **IllegalArgumentException の子**なので、親の catch で受け止められて **B**。',
+ flow:['parseInt("12a") → NumberFormatException','print("A") は飛ばす','NumberFormatException は IllegalArgumentException の子','catch に入って B'],
+ easy:'「動物お断り」の看板（親の catch）は、犬（子の例外）も止めます。',
+ words:[['parseInt','文字列を int に変換する'],['NumberFormatException','数値にできない文字列を変換しようとしたときの例外']],
+ tip:'catch は「その例外と、その子孫」を受け止めます。'},
+
+{id:'m7-6', ch:7, lv:2, tag:'チェック例外は放っておけない',
+ q:'次のコードをコンパイル・実行したときの結果はどれ？',
+ code:`public class Main {
+    static void f() {
+        throw new Exception("x");
+    }
+    public static void main(String[] args) {
+        f();
+    }
+}`,
+ opts:['コンパイルエラー','実行時に例外 x が表示される','何も表示されない','x と表示される'],
+ ans:0,
+ hint:'Exception はチェック例外です。throws も try-catch もありません。',
+ one:'Exception は**チェック例外**。投げるなら **throws で宣言するか、try-catch で処理**しないとコンパイルエラー。',
+ flow:['throw new Exception → チェック例外','f に throws Exception がない','try-catch もない','コンパイルエラー'],
+ easy:'チェック例外は「危険物」。運ぶ（throw）なら、伝票に「危険物あり（throws）」と書くか、その場で処理（catch）する決まりです。',
+ words:[['チェック例外','Exception の仲間（RuntimeException 以外）。処理を書かないとコンパイルエラー'],['throws','このメソッドは例外を投げる可能性があると宣言する']],
+ tip:'RuntimeException の仲間（非チェック例外）なら、何も書かなくてもコンパイルは通ります。'},
+
+{id:'m7-7', ch:7, lv:2, tag:'throws と呼び出し元',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    static void f() throws Exception {
+        throw new Exception("E");
+    }
+    public static void main(String[] args) {
+        try {
+            f();
+            System.out.print("A");
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+    }
+}`,
+ opts:['E','A','EA','コンパイルエラー'],
+ ans:0,
+ hint:'f の中で投げられた例外は、呼び出し元の main に戻ってきます。',
+ one:'f が投げた例外は **呼び出し元へ伝わる**。main の catch で受け、getMessage() で "E" を表示。A は飛ばされて **E**。',
+ flow:['f() → throw new Exception("E")','f には catch がない → main に戻る','print("A") は飛ばす','catch で getMessage() → E'],
+ easy:'バトンを落とした選手（f）が、そのまま監督（main）に報告するイメージ。監督が受け止めて「E でした」と読み上げます。',
+ words:[['getMessage()','例外を作ったときに渡したメッセージを返す']],
+ tip:'例外は「呼んだ人」へさかのぼって、最初に見つかった catch で止まります。'},
+
+{id:'m7-8', ch:7, lv:3, tag:'入れ子の try と finally',
+ q:'次のコードを実行したときの結果はどれ？',
+ code:`public class Main {
+    public static void main(String[] args) {
+        try {
+            try {
+                throw new RuntimeException("in");
+            } finally {
+                System.out.print("F");
+            }
+        } catch (RuntimeException e) {
+            System.out.print(e.getMessage());
+        }
+    }
+}`,
+ opts:['Fin','inF','F','in'],
+ ans:0,
+ hint:'内側の try には catch がありません。例外が外へ出ていく前に、何が動くでしょう。',
+ one:'内側で例外 → 内側には catch がないので外へ出る**前に finally** が動いて F → 外側の catch で "in"。**Fin**。',
+ flow:['内側の try で RuntimeException("in")','内側に catch なし','外へ出る前に内側の finally → F','外側の catch → getMessage() → in'],
+ easy:'部屋を出る前に必ず電気を消す（finally）。そのあと廊下で待っている人（外側の catch）が受け止めます。',
+ tip:'finally は「その try ブロックを出るとき」に必ず動く。外の catch より先です。'}
 ];
 
 /* これまでのドリルから取り込んだ問題（いずれも Java で実行して確認済み） */
@@ -4690,7 +5832,7 @@ const BANK = [
 
 
 /* ============ 基本データ ============ */
-const ALLQ = QUESTIONS.concat(typeof BANK !== 'undefined' ? BANK : []).map(q => Object.assign({}, q, {ans: Array.isArray(q.ans) ? q.ans : [q.ans]}));
+const ALLQ = QUESTIONS.concat(typeof MORE !== 'undefined' ? MORE : [], typeof BANK !== 'undefined' ? BANK : []).map(q => Object.assign({}, q, {ans: Array.isArray(q.ans) ? q.ans : [q.ans]}));
 const QMAP = Object.fromEntries(ALLQ.map(q => [q.id, q]));
 const CH = {1:'Javaの概要',2:'データ型と文字列',3:'演算子と条件分岐',4:'繰り返し',5:'クラス',6:'継承とインタフェース',7:'例外処理'};
 const LV = {1:'やさしい',2:'ふつう',3:'本番レベル'};
@@ -4726,7 +5868,7 @@ const I = {
 
 /* ============ 進み具合（保存データ） ============ */
 const LKEY = 'silver-step-v1';
-const blank = () => ({v:1, updatedAt:0, xp:0, days:{}, qs:{}, found:[], conquered:[], exams:[], exam:null});
+const blank = () => ({v:1, updatedAt:0, xp:0, days:{}, qs:{}, found:[], conquered:[], exams:[], exam:null, fun:{}});
 let P = blank();
 try { const raw = JSON.parse(localStorage.getItem(LKEY) || 'null'); if (raw && raw.v === 1) P = Object.assign(blank(), raw); } catch(e) {}
 let cloud = {ref:null, state:'device', writing:false, again:false, timer:null};
@@ -4762,18 +5904,21 @@ function mergeP(a, b){
   new Set([...Object.keys(A), ...Object.keys(B)]).forEach(k => {
     const x = A[k], y = B[k];
     if (!x || !y) { m.days[k] = JSON.parse(JSON.stringify(x || y)); return; }
-    const d = {}; ['n','c','xp','peek','easy','rv','conq'].forEach(f => d[f] = Math.max(x[f] || 0, y[f] || 0));
+    const d = {}; ['n','c','xp','peek','easy','rv','conq','fun'].forEach(f => d[f] = Math.max(x[f] || 0, y[f] || 0));
     d.chs = [...new Set([...(x.chs || []), ...(y.chs || [])])].sort(); d.ms = [...new Set([...(x.ms || []), ...(y.ms || [])])];
     m.days[k] = d;
   });
   const qa = a.qs || {}, qb = b.qs || {};
-  new Set([...Object.keys(qa), ...Object.keys(qb)]).forEach(id => { const x = qa[id] || {n:0, c:0}, y = qb[id] || {n:0, c:0}; m.qs[id] = {n:Math.max(x.n, y.n), c:Math.max(x.c, y.c)}; });
+  new Set([...Object.keys(qa), ...Object.keys(qb)]).forEach(id => { const x = qa[id] || {n:0, c:0}, y = qb[id] || {n:0, c:0}; m.qs[id] = {n:Math.max(x.n, y.n), c:Math.max(x.c, y.c)}; const t = Math.max(x.t || 0, y.t || 0); if (t) m.qs[id].t = t; });
   const fa = a.found || [], fb = b.found || [], ca = a.conquered || [], cb = b.conquered || [];
   m.conquered = [...new Set([...ca, ...cb])];
   m.found = [...new Set([...fa, ...fb])].filter(id => !((ca.includes(id) && !fa.includes(id)) || (cb.includes(id) && !fb.includes(id))));
   const seen = new Set();
   m.exams = [...(a.exams || []), ...(b.exams || [])].filter(x => { const key = [x.date, x.kind, x.total, x.correct, x.used].join('|'); if (seen.has(key)) return false; seen.add(key); return true; }).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : 0).slice(-50);
   m.exam = a.exam && b.exam ? (a.exam.elapsed >= b.exam.elapsed ? a.exam : b.exam) : (a.exam || b.exam || null);
+  const fa2 = a.fun || {}, fb2 = b.fun || {}, tr = Object.assign({}, fa2.trace || {});
+  Object.entries(fb2.trace || {}).forEach(([k, v]) => tr[k] = Math.max(tr[k] || 0, v));
+  m.fun = {sprint:Math.max(fa2.sprint || 0, fb2.sprint || 0), trace:tr, oxMiss:[...new Set([...(fa2.oxMiss || []), ...(fb2.oxMiss || [])])].slice(-20)};
   const dayXp = Object.values(m.days).reduce((s, d) => s + (d.xp || 0), 0);
   m.xp = Math.max(a.xp || 0, b.xp || 0, dayXp);
   m.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
@@ -4845,12 +5990,13 @@ const level = xp => { let L = 1, need = 60; while (xp >= need) { xp -= need; L++
 const title = L => TITLES[Math.min(TITLES.length - 1, L - 1)];
 const totals = () => { let n = 0, c = 0; Object.values(P.days).forEach(d => { n += d.n; c += d.c; }); return {n, c}; };
 function streakInfo(){
-  const t = ymd(); let s = 0, d = P.days[t] && P.days[t].n ? t : addDays(t, -1);
-  while (P.days[d] && P.days[d].n) { s++; d = addDays(d, -1); }
-  const keys = Object.keys(P.days).filter(k => P.days[k].n).sort();
+  const act = k => P.days[k] && (P.days[k].n || P.days[k].fun);
+  const t = ymd(); let s = 0, d = act(t) ? t : addDays(t, -1);
+  while (act(d)) { s++; d = addDays(d, -1); }
+  const keys = Object.keys(P.days).filter(act).sort();
   let best = 0, run = 0, prev = null;
   keys.forEach(k => { run = prev && addDays(prev, 1) === k ? run + 1 : 1; best = Math.max(best, run); prev = k; });
-  return {s, best, todayDone: !!(P.days[t] && P.days[t].n)};
+  return {s, best, todayDone: !!act(t)};
 }
 const clearedSet = () => new Set(Object.entries(P.qs).filter(([, v]) => v.c > 0).map(([k]) => k));
 
@@ -4873,13 +6019,25 @@ let ui = {mode:'learn', ch:0, lv:0, count:3, peek:false, hint:false, easy:false,
 const shuffle = (arr, seed) => { const a = arr.slice(); let s = seed; for (let i = a.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; const j = Math.floor(s / 233280 * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const orderFor = (q, seed) => q.fixed ? q.opts.map((_, j) => j) : shuffle(q.opts.map((_, j) => j), seed);
 
+/* 出題の順番：まだ見ていない → しばらく見ていない → 最近見た。同じ順位の中はシャッフル */
+const DAY = 86400000;
+function rank(q){
+  const r = P.qs[q.id]; if (!r) return 0;
+  const ago = Date.now() - (r.t || 0);
+  let s = r.c > 0 ? 2 : 1;            // クリア済みは少しあとまわし
+  if (ago < DAY) s += 4;              // 24時間以内に見た問題は、ほかを出し切ってから
+  else if (ago < 3 * DAY) s += 2;
+  return s;
+}
+function freshOrder(pool){ return pool.map(q => [q, rank(q) + Math.random() * 0.9]).sort((a, b) => a[1] - b[1]).map(x => x[0]); }
+const DKEY = 'silver-step-daily';
 function dailyQuestion(){
-  const cl = clearedSet(), t = ymd();
-  const seed = t.split('-').reduce((a, b) => a * 31 + Number(b), 7);
-  const pool = ALLQ.filter(q => !cl.has(q.id)).sort((a, b) => a.lv - b.lv || (a.fixed ? 1 : 0) - (b.fixed ? 1 : 0) || a.ch - b.ch);
-  if (pool.length) { const f = pool[0]; const same = pool.filter(q => q.lv === f.lv && !!q.fixed === !!f.fixed); return same[seed % same.length]; }
-  if (P.found.length) return QMAP[P.found[seed % P.found.length]];
-  return ALLQ[seed % ALLQ.length];
+  const t = ymd(); let st = null;
+  try { st = JSON.parse(localStorage.getItem(DKEY) || 'null'); } catch(e) {}
+  if (st && st.date === t && QMAP[st.id] && ((P.qs[st.id] || {}).t || 0) < st.at) return QMAP[st.id];
+  const q = freshOrder(ALLQ.filter(q => q.lv <= 2))[0] || ALLQ[0];
+  try { localStorage.setItem(DKEY, JSON.stringify({date:t, id:q.id, at:Date.now()})); } catch(e) {}
+  return q;
 }
 
 function startSession(mode, ids){
@@ -4892,14 +6050,13 @@ const resetQ = () => { ui.peek = false; ui.hint = false; ui.easy = false; ui.wor
 function pickIds(){
   let pool = ALLQ.filter(q => (!ui.ch || q.ch === ui.ch) && (!ui.lv || q.lv === ui.lv));
   const cl = clearedSet();
-  pool = pool.slice().sort(() => Math.random() - .5).sort((a, b) => (cl.has(a.id) ? 1 : 0) - (cl.has(b.id) ? 1 : 0));
-  return pool.slice(0, ui.count).map(q => q.id);
+  return freshOrder(pool).slice(0, ui.count).map(q => q.id);
 }
 
 /* 1問の結果を記録（学習・テスト・本番で共通） */
 function record(id, ok, d){
   const q = QMAP[id], rec = P.qs[id] || (P.qs[id] = {n:0, c:0});
-  rec.n++; d.n++; if (!d.chs.includes(q.ch)) d.chs.push(q.ch);
+  rec.n++; rec.t = Date.now(); d.n++; if (!d.chs.includes(q.ch)) d.chs.push(q.ch);
   let conq = false;
   if (ok) { rec.c++; d.c++; if (P.found.includes(id)) { P.found = P.found.filter(x => x !== id); if (!P.conquered.includes(id)) P.conquered.push(id); d.conq++; conq = true; } }
   else if (!P.found.includes(id)) P.found.push(id);
@@ -4911,7 +6068,7 @@ function answer(sel){
   const id = S.ids[S.i], q = QMAP[id], ok = sameSet(sel, q.ans), d = today();
   const peeked = S.mode !== 'test' && ui.peek;
   let kind, gain;
-  if (peeked) { const rec = P.qs[id] || (P.qs[id] = {n:0, c:0}); rec.n++; d.n++; if (!d.chs.includes(q.ch)) d.chs.push(q.ch); kind = 'peek'; gain = XP.peek; d.peek++; }
+  if (peeked) { const rec = P.qs[id] || (P.qs[id] = {n:0, c:0}); rec.n++; rec.t = Date.now(); d.n++; if (!d.chs.includes(q.ch)) d.chs.push(q.ch); kind = 'peek'; gain = XP.peek; d.peek++; }
   else { const conq = record(id, ok, d); kind = ok ? (conq ? 'conq' : 'ok') : 'find'; gain = ok ? XP.ok + (conq ? XP.review : 0) : XP.find; }
   if (S.mode === 'review') d.rv++;
   P.xp += gain; d.xp += gain; S.xp += gain;
@@ -4931,8 +6088,7 @@ function next(){
 
 /* ============ 本番モード ============ */
 function buildExam(n){
-  const byCh = {}; ALLQ.forEach(q => (byCh[q.ch] = byCh[q.ch] || []).push(q));
-  Object.values(byCh).forEach(a => a.sort(() => Math.random() - .5));
+  const byCh = {}; freshOrder(ALLQ).reverse().forEach(q => (byCh[q.ch] = byCh[q.ch] || []).push(q));
   const chs = Object.keys(byCh).sort(() => Math.random() - .5), ids = [];
   for (let k = 0; ids.length < n && k < 5000; k++) { const a = byCh[chs[k % chs.length]]; if (a.length) ids.push(a.pop().id); }
   return ids.sort(() => Math.random() - .5);
@@ -4976,12 +6132,13 @@ function paintTimer(){
 /* ============ 描画 ============ */
 function render(){
   const a = document.getElementById('app');
-  a.innerHTML = ({home:homeHTML, pick:pickHTML, play:playHTML, result:resultHTML, note:noteHTML, stats:statsHTML, today:todayHTML, examIntro:examIntroHTML, exam:examHTML, examResult:examResultHTML})[view]();
-  const tab = {home:'home', today:'home', examIntro:'pick', examResult:'pick', pick:'pick', play:'pick', result:'pick', note:'note', stats:'stats'}[view];
+  a.innerHTML = ({home:homeHTML, pick:pickHTML, play:playHTML, result:resultHTML, note:noteHTML, stats:statsHTML, today:todayHTML, examIntro:examIntroHTML, exam:examHTML, examResult:examResultHTML, fun:funHTML, sprint:sprintHTML, trace:traceHTML})[view]();
+  const tab = {home:'home', today:'home', examIntro:'pick', examResult:'pick', pick:'pick', play:'pick', result:'pick', note:'note', stats:'stats', fun:'fun', sprint:'fun', trace:'fun'}[view];
   const nb = (k, label, icon, badge) => '<button class="navb" data-go="' + k + '"' + (tab === k ? ' aria-current="page"' : '') + '>' + icon + label + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</button>';
-  document.getElementById('nav').innerHTML = nb('home','ホーム',I.home) + nb('pick','学ぶ',I.learn) + nb('note','ノート',I.book, P.found.length || '') + nb('stats','記録',I.chart);
-  document.querySelector('.nav').hidden = view === 'play' || view === 'exam';
+  document.getElementById('nav').innerHTML = nb('home','ホーム',I.home) + nb('pick','学ぶ',I.learn) + nb('fun','あそぶ',I.game) + nb('note','ノート',I.book, P.found.length || '') + nb('stats','記録',I.chart);
+  document.querySelector('.nav').hidden = view === 'play' || view === 'exam' || view === 'sprint' || view === 'trace';
   paintSync(); paintTimer();
+  if (view === 'sprint' && SP && SP.phase === 'play') paintSprint();
 }
 
 function greet(){ const h = new Date().getHours(); return h < 5 ? 'こんばんは' : h < 11 ? 'おはよう' : h < 18 ? 'こんにちは' : 'こんばんは'; }
@@ -5004,6 +6161,7 @@ function homeHTML(){
   return topBar() + '<div class="stack" style="margin-top:14px">' + resume +
     '<section class="card hero"><span class="deco" aria-hidden="true">{ }</span><div class="meta"><span>第' + q.ch + '章 ' + esc(CH[q.ch]) + '</span><span>' + LV[q.lv] + '</span></div><h2>今日の1問</h2><p>' + esc(q.tag) + '。1分あれば解けます。</p><button class="btn" data-daily>1問だけやってみる</button></section>' +
     '<section class="card streak"><span class="flame">' + (st.todayDone || st.s ? I.flame : I.seed) + '</span><div><h3>' + esc(sTitle) + '</h3><p>' + esc(sText) + '</p></div></section>' +
+    '<button class="card sleepy-cta" data-go="fun"><span class="flame" style="background:var(--find-soft);color:var(--find)">' + I.game + '</span><span><b>眠い・頭に入らないときは</b><small>60秒の○×スプリントや「なりきりCPU」で、遊びながら</small></span></button>' +
     '<div class="quick">' +
       qb('pick', ' data-mode="learn"', 'var(--brand-soft)', 'var(--brand)', I.book, '学習モード', '答えを見ながらOK') +
       qb('pick', ' data-mode="test"', 'var(--cta-soft)', 'var(--cta)', I.bolt, 'テストモード', '数問で力試し') +
@@ -5208,12 +6366,12 @@ function todayHTML(){
   const d = P.days[ymd()];
   const date = new Date(), wd = '日月火水木金土'[date.getDay()];
   let o = '<div class="stack"><div class="row"><button class="qclose" data-go="home" aria-label="ホームへ">' + I.x + '</button><h1 style="font-size:1.3rem">今日のふりかえり</h1></div><p class="muted" style="margin:-6px 0 0">' + (date.getMonth() + 1) + '月' + date.getDate() + '日（' + wd + '）</p>';
-  if (!d || !d.n) {
+  if (!d || !(d.n || d.fun)) {
     o += '<section class="card empty"><div class="ic">' + I.seed + '</div><h3>今日はまだこれから</h3><p class="muted small">1問だけでも、今日の積み上げになります。</p><button class="btn cta" data-daily style="margin-top:8px">今日の1問をやる</button></section>';
   } else {
     const exToday = P.exams.filter(x => x.date === ymd());
     o += '<section class="card big"><div class="num">' + d.n + '<span style="font-size:1.2rem;color:var(--muted)">問</span></div><h1>今日できたこと</h1><p class="muted" style="margin:4px 0 0">' + esc(dayMsg(d)) + '</p></section>';
-    o += '<section class="done-list">' + doneItem(I.check, 'var(--ok-soft)', 'var(--ok)', 'クリアした問題', d.c) + (exToday.length ? doneItem(I.clock, 'var(--brand-soft)', 'var(--brand)', '本番モードを完走', exToday.length + '回') : '') + (d.conq ? doneItem(I.gem, 'var(--find-soft)', 'var(--find)', '克服した発見', d.conq) : '') + (d.easy ? doneItem(I.light.replace('var(--xp)', 'currentColor'), 'var(--xp-soft)', 'var(--xp)', '「もっと簡単に」で理解を深めた', d.easy + '回') : '') + (d.peek ? doneItem(I.book, 'var(--brand-soft)', 'var(--brand)', '答えを見てなぞった', d.peek) : '') + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', '今日の経験値', '+' + d.xp) + doneItem(I.flame, 'var(--xp-soft)', 'var(--xp)', 'ミッション達成', (d.ms || []).length + ' / 3') + '</section>';
+    o += '<section class="done-list">' + doneItem(I.check, 'var(--ok-soft)', 'var(--ok)', 'クリアした問題', d.c) + (d.fun ? doneItem(I.game, 'var(--find-soft)', 'var(--find)', 'あそんで覚えた', d.fun + '回') : '') + (exToday.length ? doneItem(I.clock, 'var(--brand-soft)', 'var(--brand)', '本番モードを完走', exToday.length + '回') : '') + (d.conq ? doneItem(I.gem, 'var(--find-soft)', 'var(--find)', '克服した発見', d.conq) : '') + (d.easy ? doneItem(I.light.replace('var(--xp)', 'currentColor'), 'var(--xp-soft)', 'var(--xp)', '「もっと簡単に」で理解を深めた', d.easy + '回') : '') + (d.peek ? doneItem(I.book, 'var(--brand-soft)', 'var(--brand)', '答えを見てなぞった', d.peek) : '') + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', '今日の経験値', '+' + d.xp) + doneItem(I.flame, 'var(--xp-soft)', 'var(--xp)', 'ミッション達成', (d.ms || []).length + ' / 3') + '</section>';
     o += '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">今日さわった分野</h3><div class="chips">' + d.chs.slice().sort().map(c => '<span class="chip" style="cursor:default">第' + c + '章 ' + esc(CH[c]) + '</span>').join('') + '</div></section>';
     o += '<button class="btn ghost wide" data-onemore>もう1問だけ</button>';
   }
@@ -5250,7 +6408,7 @@ document.addEventListener('click', e => {
   if (b.hasAttribute('data-start')) { const ids = pickIds(); if (ids.length) startSession(ui.mode, ids); return; }
   if (b.hasAttribute('data-review')) { startSession('review', P.found.slice(0, 5)); return; }
   if (b.dataset.reviewone) { startSession('review', [b.dataset.reviewone]); return; }
-  if (b.hasAttribute('data-onemore')) { const cl = clearedSet(); const pool = ALLQ.filter(q => !cl.has(q.id)); const q = pool.length ? pool[Math.floor(Math.random() * pool.length)] : ALLQ[Math.floor(Math.random() * ALLQ.length)]; startSession('learn', [q.id]); return; }
+  if (b.hasAttribute('data-onemore')) { startSession('learn', [freshOrder(ALLQ)[0].id]); return; }
   if (b.hasAttribute('data-quit')) { view = S && S.res.length ? 'result' : 'home'; render(); window.scrollTo({top:0}); return; }
   if (b.dataset.opt !== undefined) {
     const j = +b.dataset.opt;
@@ -5297,6 +6455,303 @@ document.addEventListener('visibilitychange', () => {
   else pullCloud();
 });
 window.addEventListener('pagehide', flushSave);
+
+/* ============ あそぶ：○×スプリント と なりきりCPU ============ */
+I.game = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10.5v4M5 12.5h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="15.5" cy="11.5" r="1.2" fill="currentColor"/><circle cx="18" cy="14" r="1.2" fill="currentColor"/></svg>';
+I.cpu = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 10h4v4h-4z" fill="currentColor"/></svg>';
+
+/* ○×の問題：[正しければ1, 文, ひとこと理由] */
+const OX = [
+[1,'javac に渡すのはファイル名（Main.java）','java に渡すのはクラス名（拡張子なし）。'],
+[0,'java コマンドには Main.class のように拡張子を付けて渡す','java Main のようにクラス名だけを渡す。'],
+[1,'String・Math・System は import なしで使える','どれも java.lang パッケージだから。'],
+[0,'ArrayList は import なしで使える','java.util なので import が必要。'],
+[1,'package 文はファイルの先頭に書く','順番は package → import → class。'],
+[0,'1つのファイルに public クラスをいくつでも書ける','public クラスは1ファイルに1つまで。'],
+[1,'配列の番号は 0 から始まる','長さ 3 なら番号は 0・1・2。'],
+[0,'配列の長さは a.length() で調べる','配列は a.length（カッコなし）。文字列は s.length()。'],
+[1,'文字列の長さは s.length() で調べる','String はメソッドなので ( ) が付く。'],
+[1,'int の配列を new すると、中身は 0 で埋まる','boolean は false、参照型は null。'],
+[0,'ローカル変数は自動で 0 が入る','ローカル変数は値を入れないと使えない（コンパイルエラー）。'],
+[1,'"Java".charAt(0) は J','番号 0 は先頭の文字。'],
+[0,'"Java".substring(1, 3) は "ava"','終わりの番号は含まないので "av"。'],
+[1,'String は一度作ると中身が変わらない','toUpperCase なども新しい String を返すだけ。'],
+[1,'StringBuilder の append は自分自身を書き換える','だから戻り値を受け取らなくても変わる。'],
+[0,'文字列の中身の比較には == を使う','中身の比較は equals。== は同じ物かどうか。'],
+[1,'1 + 2 + "3" は "33"','左から：1+2=3、3+"3"="33"。'],
+[0,'"1" + 2 + 3 は "15"','文字列のあとは連結なので "123"。'],
+[1,'10 % 3 は 1','% は割った余り。'],
+[0,'7 / 2 は 3.5','int どうしの割り算は切り捨てで 3。'],
+[1,'&& は左が false なら右を実行しない','短絡評価。& 1つなら右も実行する。'],
+[0,'int x = 3.5; はコンパイルできる','double を int に入れるにはキャストが必要。'],
+[1,'x += 2.5 は x が int でもコンパイルできる','複合代入は自動でキャストされる。'],
+[1,'var はローカル変数にだけ使える','フィールドや引数には使えない。'],
+[0,'var x; と書いて、あとで値を入れてもよい','var は宣言と同時に初期化が必要。'],
+[1,'switch で break がないと、下の case も実行される','フォールスルーという。'],
+[0,'do-while は条件が false なら1回も実行されない','do-while は最低1回は実行される。'],
+[1,'continue はループの残りを飛ばして次の回へ進む','break はループを抜ける。'],
+[0,'break はプログラム全体を終了させる','今いるループ（か switch）を抜けるだけ。'],
+[1,'for (int x : a) の x には配列の中身が順に入る','番号ではなく中身が入る。'],
+[1,'コンストラクタには戻り値の型を書かない','void を付けるとただのメソッドになる。'],
+[0,'コンストラクタを1つも書かないと new できない','書かなければ引数なしのコンストラクタが自動で作られる。'],
+[1,'static フィールドは全インスタンスで共有される','クラスに1つだけある。'],
+[0,'static メソッドの中で this が使える','static はインスタンスなしで動くので this は使えない。'],
+[1,'private のメンバーは同じクラスの中からしか使えない','いちばん狭いアクセス修飾子。'],
+[1,'引数とフィールドが同じ名前なら、フィールドは this.x と書く','x だけだと引数の方になる。'],
+[1,'オーバーロードは引数の型か数を変える','戻り値の型だけ変えてもダメ。'],
+[0,'戻り値の型だけ違うメソッドを並べるとオーバーロードになる','引数が同じならコンパイルエラー。'],
+[1,'extends できるクラスは1つだけ','単一継承。インタフェースは複数 OK。'],
+[0,'abstract クラスは new できる','未完成なので new できない。'],
+[1,'子のコンストラクタは、まず親のコンストラクタを呼ぶ','書かなくても super() が自動で入る。'],
+[1,'Animal a = new Dog(); の a.cry() は Dog の cry が動く','メソッドは中身（new したもの）で決まる。'],
+[0,'フィールドも、new したものの方が使われる','フィールドは変数の型で決まる。'],
+[1,'インタフェースの default メソッドは中身を持てる','実装クラスで書かなくても使える。'],
+[0,'オーバーライドでアクセス修飾子を狭くしてもよい','広くするのは OK、狭くするのはダメ。'],
+[1,'Predicate の判定は test メソッドで行う','Function は apply、Supplier は get、Consumer は accept。'],
+[1,'x -> x * 2 は「x を受け取って 2倍を返す」ラムダ式','引数 -> 処理 の形。'],
+[1,'finally は例外があってもなくても実行される','return があっても実行される。'],
+[0,'catch は親の例外を先に書いてもよい','親が先だと子の catch に届かずコンパイルエラー。'],
+[1,'Exception（チェック例外）は throws か try-catch が必要','RuntimeException の仲間は不要。'],
+[0,'NullPointerException はコンパイル時に見つかる','実行してみて初めて起きる。'],
+[1,'Integer.parseInt("abc") は NumberFormatException','数値にできない文字列だから。'],
+[1,'配列の範囲外の番号は ArrayIndexOutOfBoundsException','実行時に起きる。'],
+[0,'try のあとには catch が必ず必要','catch か finally のどちらかがあればよい。']
+];
+
+/* なりきりCPU：コードを1行ずつ、自分がコンピュータになって動かす
+   steps: l=光らせる行, say=説明, pre=着いたときに変わる変数, ask={q, o:[正解, ...], why}, post=答えたあとに変わる変数, out=画面に出る文字 */
+const TRACES = [
+{id:'t1', ch:4, title:'for で足し算', sub:'ループが何回まわるか', code:[
+'int sum = 0;','for (int i = 1; i <= 3; i++) {','    sum += i;','}','System.out.println(sum);'],
+steps:[
+{l:0, say:'sum という箱を作って、0 を入れます。', pre:{sum:0}},
+{l:1, say:'for の準備。i を 1 にしてから、条件 i <= 3 を調べます。', pre:{i:1}, ask:{q:'1 <= 3 は？', o:['true（中に入る）','false（終わる）'], why:'1 は 3 以下なので true。ループの中へ。'}},
+{l:2, ask:{q:'sum += i のあと、sum はいくつ？', o:['1','0','2'], why:'sum(0) + i(1) = 1'}, post:{sum:1}},
+{l:1, say:'1周終わり。i++ してから、もう一度条件を調べます。', ask:{q:'i++ のあと、i はいくつ？', o:['2','1','3'], why:'1 増えて 2。2 <= 3 なのでまた中へ。'}, post:{i:2}},
+{l:2, ask:{q:'sum はいくつになる？', o:['3','2','4'], why:'sum(1) + i(2) = 3'}, post:{sum:3}},
+{l:1, say:'i++ で i は 3 になりました。', pre:{i:3}, ask:{q:'3 <= 3 は？', o:['true（中に入る）','false（終わる）'], why:'<= は「以下」なので 3 も含みます。'}},
+{l:2, ask:{q:'sum は？', o:['6','5','3'], why:'sum(3) + i(3) = 6'}, post:{sum:6}},
+{l:1, say:'i++ で i は 4 になりました。', pre:{i:4}, ask:{q:'4 <= 3 は？', o:['false（終わる）','true（中に入る）'], why:'4 は 3 より大きいので false。ループを抜けます。'}},
+{l:4, say:'for が終わったので i は消えます（for の中だけの変数）。最後に sum を表示。', pre:{i:null}, ask:{q:'画面に出るのは？', o:['6','4','3'], why:'1 + 2 + 3 を足した 6 が入っています。'}, out:'6'}]},
+
+{id:'t2', ch:3, title:'後置の n--', sub:'比べてから減らす', code:[
+'int n = 3;','while (n-- > 0) {','    System.out.print(n);','}','System.out.print(" end " + n);'],
+steps:[
+{l:0, say:'n に 3 を入れます。', pre:{n:3}},
+{l:1, say:'n-- > 0 を調べます。うしろの -- は「比べてから減らす」。', ask:{q:'比べるときに使う n の値は？', o:['3','2'], why:'今の 3 で比べて（true）、そのあと 1 減らします。'}, post:{n:2}},
+{l:2, ask:{q:'表示される数字は？', o:['2','3'], why:'比べたあとすでに減っているので 2。'}, out:'2'},
+{l:1, say:'もう一度 n-- > 0。今の 2 で比べて true。', ask:{q:'比べたあと、n はいくつ？', o:['1','2','0'], why:'2 で比べてから 1 減らすので 1。'}, post:{n:1}},
+{l:2, say:'n の 1 を表示。', out:'1'},
+{l:1, say:'1 > 0 で true。比べたあと n は 0 に。', pre:{n:0}},
+{l:2, ask:{q:'表示される数字は？', o:['0','1'], why:'n はもう 0 になっています。'}, out:'0'},
+{l:1, say:'n-- > 0 を調べます。', ask:{q:'0 > 0 は？', o:['false（ループ終了）','true（中に入る）'], why:'0 は 0 より大きくないので false。'}},
+{l:1, say:'ここが落とし穴。false でも「比べたあとに減らす」は行われます。', ask:{q:'ループを抜けたとき、n は？', o:['-1','0'], why:'0 で比べたあと 1 減って -1。'}, post:{n:-1}},
+{l:4, ask:{q:'最後に表示されるのは？', o:[' end -1',' end 0'], why:'n は -1 になっています。'}, out:' end -1'}]},
+
+{id:'t3', ch:2, title:'StringBuilder の変身', sub:'自分自身が変わる', code:[
+'StringBuilder sb = new StringBuilder("cat");','sb.append("s");','sb.insert(0, "2 ");','sb.reverse();','System.out.println(sb);'],
+steps:[
+{l:0, say:'"cat" が入った StringBuilder を作ります。', pre:{sb:'"cat"'}},
+{l:1, ask:{q:'append("s") のあと、sb は？', o:['"cats"','"scat"','"cat"'], why:'append はうしろに付け足し。StringBuilder は自分自身が変わります。'}, post:{sb:'"cats"'}},
+{l:2, ask:{q:'insert(0, "2 ") のあと、sb は？', o:['"2 cats"','"c2 ats"','"cats2 "'], why:'0 番目の前、つまり先頭に差し込みます。'}, post:{sb:'"2 cats"'}},
+{l:3, ask:{q:'reverse() のあと、sb は？', o:['"stac 2"','"2 stac"','"stac2 "'], why:'全体をうしろから読みます：s t a c 空白 2'}, post:{sb:'"stac 2"'}},
+{l:4, ask:{q:'画面に出るのは？', o:['stac 2','cat','2 cats'], why:'書き換わってきた最後の状態が、そのまま表示されます。'}, out:'stac 2'}]},
+
+{id:'t4', ch:3, title:'switch の流れ落ち', sub:'break がないと…', code:[
+'int n = 2;','switch (n) {','    case 1: System.out.print("A");','    case 2: System.out.print("B");','    case 3: System.out.print("C");','            break;','    default: System.out.print("D");','}'],
+steps:[
+{l:0, say:'n に 2 を入れます。', pre:{n:2}},
+{l:1, ask:{q:'どの case から始まる？', o:['case 2','case 1','default'], why:'n は 2 なので case 2 へジャンプ。case 1 は飛ばします。'}},
+{l:3, say:'B を表示します。', out:'B'},
+{l:3, ask:{q:'この行には break がない！ 次は？', o:['下の case 3 の処理もそのまま実行','switch を抜ける'], why:'break がないと下へ流れ落ちます（フォールスルー）。'}},
+{l:4, say:'case 3 の C も表示されます。', out:'C'},
+{l:5, ask:{q:'break に来たら？', o:['switch を抜ける','default も実行する'], why:'break で switch の外へ。default は動きません。'}},
+{l:7, ask:{q:'画面の表示は？', o:['BC','B','BCD'], why:'case 2 から入って break まで：B と C。'}}]},
+
+{id:'t5', ch:5, title:'値のコピーと参照', sub:'メソッドに渡すと何が変わる？', code:[
+'static void add(int x, int[] a) {','    x++;','    a[0]++;','}','public static void main(String[] args) {','    int x = 1;','    int[] a = {1};','    add(x, a);','    System.out.println(x + " " + a[0]);','}'],
+steps:[
+{l:5, say:'main の x に 1 を入れます。', pre:{'x（main）':1}},
+{l:6, say:'a は配列の「場所」を覚えます。中身は [1]。', pre:{'a[0]':1}},
+{l:7, say:'add を呼びます。'},
+{l:0, say:'add の中に、新しい x ができます。', pre:{'x（add）':1}, ask:{q:'add の x と main の x の関係は？', o:['別々の箱（値のコピー）','同じ箱'], why:'int などの基本型は、値のコピーが渡ります。'}},
+{l:1, ask:{q:'x++ で変わるのは？', o:['add の x だけ','main の x も変わる'], why:'コピーを増やしただけなので、main の x は 1 のまま。'}, post:{'x（add）':2}},
+{l:2, ask:{q:'a[0]++ のあと、main から見た a[0] は？', o:['2 になる','1 のまま'], why:'配列は「場所」が渡るので、同じ配列を書き換えています。'}, post:{'a[0]':2}},
+{l:3, say:'add が終わり、add の x は消えます。main に戻ります。', pre:{'x（add）':null}},
+{l:8, ask:{q:'画面の表示は？', o:['1 2','2 2','1 1'], why:'x はコピーだったので 1、配列は書き換わったので 2。'}, out:'1 2'}]},
+
+{id:'t6', ch:7, title:'例外が起きたら', sub:'try・catch・finally の順番', code:[
+'try {','    System.out.print("A");','    int r = 10 / 0;','    System.out.print("B");','} catch (ArithmeticException e) {','    System.out.print("C");','} finally {','    System.out.print("D");','}','System.out.print("E");'],
+steps:[
+{l:1, say:'A を表示します。', out:'A'},
+{l:2, ask:{q:'10 / 0 はどうなる？', o:['例外（ArithmeticException）が起きる','0 になる','とても大きな数になる'], why:'int を 0 で割ると ArithmeticException。'}},
+{l:4, ask:{q:'次に実行されるのは？', o:['catch の中','B の表示'], why:'例外が起きたら、try の残り（B）は飛ばして catch へ。'}},
+{l:5, say:'C を表示します。', out:'C'},
+{l:7, ask:{q:'finally は？', o:['必ず実行される','例外が起きたので飛ばす'], why:'finally は例外があってもなくても必ず動きます。'}, out:'D'},
+{l:9, ask:{q:'E は表示される？', o:['される','されない'], why:'例外は catch で処理済み。そのあとは普通に続きます。'}, out:'E'},
+{l:9, ask:{q:'画面の表示ぜんぶは？', o:['ACDE','ABCDE','ACD'], why:'B だけが飛ばされました。'}}]}
+];
+
+const SPRINT_MS = 60000;
+const MARK = {o:w => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>', x:w => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>'};
+let SP = null, TR = null;
+function funState(){ return P.fun || (P.fun = {}); }
+function funDone(gain){
+  const d = today(); d.fun = (d.fun || 0) + 1; d.xp += gain; P.xp += gain;
+}
+
+function funHTML(){
+  const F = funState(), best = F.sprint || 0, stars = F.trace || {};
+  const card = t => { const s = stars[t.id] || 0; return '<button class="trcard" data-trstart="' + t.id + '"><span class="trch">第' + t.ch + '章</span><b>' + esc(t.title) + '</b><small>' + esc(t.sub) + '</small><span class="stars" aria-label="星 ' + s + ' / 3">' + [1,2,3].map(k => '<i class="' + (k <= s ? 'on' : '') + '">★</i>').join('') + '</span></button>'; };
+  return '<div class="stack"><h1 style="font-size:1.35rem">あそぶ</h1>' +
+    '<section class="card sleepy"><h3>眠くなってきたら</h3><p>じっと読むのをやめて、手と目を動かすモードに切りかえましょう。1回1分から。</p><ul><li>立ち上がって、コードを声に出して読む</li><li>○×スプリントを1回だけ</li><li>25分やったら5分休む（休むのも学習のうち）</li></ul></section>' +
+    '<section class="card sprint-card"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><h2>○×スプリント</h2><p>60秒で、何問さばける？ 正解が続くとコンボ。</p></div><span class="bestbadge">ベスト<b>' + best + '</b></span></div><button class="btn wide" data-spgo>はじめる</button></section>' +
+    '<section class="card"><div class="row" style="gap:10px;margin-bottom:6px"><span class="flame" style="background:var(--brand-soft);color:var(--brand)">' + I.cpu + '</span><div><h3 style="font-size:1rem">なりきりCPU</h3><p class="small muted" style="margin:0">自分がコンピュータになって、コードを1行ずつ動かします。光っている行を見て答えるだけ。</p></div></div><div class="trgrid">' + TRACES.map(card).join('') + '</div></section></div>';
+}
+
+/* ---- ○×スプリント ---- */
+function sprintStart(){
+  SP = {phase:'count', n:3, deck:freshOX(), k:0, score:0, combo:0, maxc:0, right:0, wrong:0, miss:[], left:SPRINT_MS, last:null, prev:null};
+  view = 'sprint'; render(); window.scrollTo({top:0});
+  const tick = () => { if (!SP || view !== 'sprint') return; SP.n--; if (SP.n > 0) { render(); setTimeout(tick, 650); } else { SP.phase = 'play'; SP.t0 = performance.now(); render(); requestAnimationFrame(sprintLoop); } };
+  setTimeout(tick, 650);
+}
+/* 前回まちがえた文を最大8つ、前半にまぜる。残りはシャッフル */
+function freshOX(){
+  const mix = a => a.map(v => [v, Math.random()]).sort((x, y) => x[1] - y[1]).map(x => x[0]);
+  const miss = mix((funState().oxMiss || []).filter(i => OX[i])).slice(0, 8);
+  const rest = mix(OX.map((_, i) => i).filter(i => !miss.includes(i)));
+  const head = mix(miss.concat(rest.slice(0, 12 - Math.min(12, miss.length))));
+  return head.concat(rest.slice(12 - Math.min(12, miss.length)));
+}
+function sprintLoop(t){
+  if (!SP || SP.phase !== 'play' || view !== 'sprint') return;
+  const dt = Math.min(100, t - SP.t0); SP.t0 = t; SP.left -= dt;
+  const bar = document.getElementById('sptime'), sec = document.getElementById('spsec');
+  if (bar) bar.style.width = Math.max(0, SP.left / SPRINT_MS * 100) + '%';
+  if (sec) sec.textContent = Math.max(0, Math.ceil(SP.left / 1000));
+  if (bar) bar.classList.toggle('hurry', SP.left < 10000);
+  if (SP.left <= 0) { sprintEnd(); return; }
+  requestAnimationFrame(sprintLoop);
+}
+function sprintAnswer(yes){
+  if (!SP || SP.phase !== 'play') return;
+  const idx = SP.deck[SP.k % SP.deck.length], it = OX[idx], ok = (it[0] === 1) === yes;
+  if (ok) { SP.combo++; SP.maxc = Math.max(SP.maxc, SP.combo); SP.right++; SP.score += 1 + Math.floor(SP.combo / 5); }
+  else { SP.combo = 0; SP.wrong++; if (!SP.miss.includes(idx)) SP.miss.push(idx); try { navigator.vibrate && navigator.vibrate(60); } catch(e) {} }
+  SP.prev = {idx, ok}; SP.k++;
+  paintSprint(ok);
+}
+function sprintEnd(){
+  const F = funState(), was = F.sprint || 0;
+  SP.phase = 'end'; SP.newBest = SP.score > was;
+  F.sprint = Math.max(was, SP.score);
+  const keep = (F.oxMiss || []).filter(i => !SP.deck.slice(0, SP.k).includes(i) || SP.miss.includes(i));
+  F.oxMiss = [...new Set(keep.concat(SP.miss))].slice(-20);
+  SP.gain = SP.right * 2 + 5; const lvB = level(P.xp).L; funDone(SP.gain); save();
+  render(); window.scrollTo({top:0});
+  if (SP.newBest || SP.right >= 10) burst();
+  const lv = level(P.xp).L; if (lv > lvB) setTimeout(() => levelUp(lv), 700);
+}
+function sprintHTML(){
+  if (SP.phase === 'count') return '<div class="spwrap"><div class="countdown" aria-live="polite">' + SP.n + '</div><p class="muted" style="text-align:center">正しければ ○、まちがいなら ×</p></div>';
+  if (SP.phase === 'end') {
+    const acc = SP.right + SP.wrong ? Math.round(SP.right / (SP.right + SP.wrong) * 100) : 0;
+    return '<div class="stack"><section class="card big"><div class="num">' + SP.score + '<span style="font-size:1.1rem;color:var(--muted)"> 点</span></div><h1>' + (SP.newBest ? 'ベスト更新！' : SP.right + '問 正解！') + '</h1><p class="muted" style="margin:4px 0 0">60秒、おつかれさまでした。眠気、少し飛びましたか？</p></section>' +
+      '<section class="done-list">' + doneItem(I.check, 'var(--ok-soft)', 'var(--ok)', '正解', SP.right + '問（' + acc + '%）') + doneItem(I.flame, 'var(--xp-soft)', 'var(--xp)', '最大コンボ', SP.maxc) + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + SP.gain) + '</section>' +
+      (SP.miss.length ? '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">今回の発見（次回は少し多めに出ます）</h3><div class="oxmiss">' + SP.miss.map(i => '<div><span class="oxmark ' + (OX[i][0] ? 'o' : 'x') + '" aria-label="答え ' + (OX[i][0] ? '○' : '×') + '">' + (OX[i][0] ? MARK.o(16) : MARK.x(16)) + '</span><div><b>' + esc(OX[i][1]) + '</b><span>' + esc(OX[i][2]) + '</span></div></div>').join('') + '</div></section>' : '') +
+      '<button class="btn cta wide" data-spgo>もう1回</button><button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
+  }
+  return '<div class="spwrap"><div class="sphead"><button class="qclose" data-spquit aria-label="やめる">' + I.x + '</button><div class="sptimer"><i id="sptime" style="width:' + (SP.left / SPRINT_MS * 100) + '%"></i></div><span class="spsec" id="spsec">' + Math.ceil(SP.left / 1000) + '</span></div>' +
+    '<div class="spscore"><span>スコア <b id="spsc">' + SP.score + '</b></span><span class="combo" id="spcombo"></span></div>' +
+    '<div class="spcard" id="spcard"></div>' +
+    '<div class="spbtns"><button class="spb o" data-spa="1" aria-label="正しい（○）">' + MARK.o(52) + '</button><button class="spb x" data-spa="0" aria-label="まちがい（×）">' + MARK.x(52) + '</button></div>' +
+    '<div class="spprev" id="spprev" aria-live="polite"></div></div>';
+}
+function paintSprint(flash){
+  const card = document.getElementById('spcard'); if (!card) return;
+  const it = OX[SP.deck[SP.k % SP.deck.length]];
+  card.textContent = it[1];
+  card.classList.remove('good', 'bad'); void card.offsetWidth;
+  if (flash !== undefined) card.classList.add(flash ? 'good' : 'bad');
+  document.getElementById('spsc').textContent = SP.score;
+  const c = document.getElementById('spcombo'); c.textContent = SP.combo >= 2 ? SP.combo + ' コンボ！' : ''; c.classList.toggle('hot', SP.combo >= 5);
+  const pv = document.getElementById('spprev');
+  if (SP.prev) { const p = OX[SP.prev.idx]; pv.className = 'spprev ' + (SP.prev.ok ? 'ok' : 'ng'); pv.innerHTML = '<b>' + (SP.prev.ok ? 'せいかい' : 'おしい') + '　答えは ' + (p[0] ? '○' : '×') + '</b>' + esc(p[2]); }
+}
+
+/* ---- なりきりCPU ---- */
+function traceStart(id){
+  const p = TRACES.find(t => t.id === id); if (!p) return;
+  TR = {p, i:-1, vars:{}, out:'', changed:[], asks:0, right:0, answered:null, ord:null};
+  view = 'trace'; traceNext(); window.scrollTo({top:0});
+}
+function applyVars(o){ if (!o) return []; const ch = []; Object.entries(o).forEach(([k, v]) => { if (v === null) delete TR.vars[k]; else { TR.vars[k] = v; ch.push(k); } }); return ch; }
+function traceNext(){
+  TR.i++;
+  if (TR.i >= TR.p.steps.length) { traceEnd(); return; }
+  const st = TR.p.steps[TR.i];
+  TR.changed = applyVars(st.pre); TR.answered = null;
+  if (st.ask) TR.ord = st.ask.o.map((_, j) => j).sort(() => Math.random() - .5);
+  else if (st.out) TR.out += st.out;
+  render();
+}
+function traceAnswer(j){
+  const st = TR.p.steps[TR.i]; if (!st.ask || TR.answered) return;
+  const ok = j === 0; TR.asks++; if (ok) TR.right++;
+  TR.answered = {j, ok};
+  TR.changed = applyVars(st.post); if (st.out) TR.out += st.out;
+  render();
+  if (ok) { const el = document.querySelector('.tropt.right'); if (el) el.classList.add('pop'); }
+}
+function traceEnd(){
+  const F = funState(); F.trace = F.trace || {};
+  const r = TR.asks ? TR.right / TR.asks : 1, s = r >= .95 ? 3 : r >= .7 ? 2 : 1;
+  TR.stars = s; TR.best = s > (F.trace[TR.p.id] || 0); F.trace[TR.p.id] = Math.max(F.trace[TR.p.id] || 0, s);
+  TR.gain = TR.right * 4 + 5; const lvB = level(P.xp).L; funDone(TR.gain); save();
+  TR.done = true; render(); window.scrollTo({top:0}); if (s === 3) burst();
+  const lv = level(P.xp).L; if (lv > lvB) setTimeout(() => levelUp(lv), 700);
+}
+function traceHTML(){
+  const p = TR.p;
+  if (TR.done) {
+    const nx = TRACES[(TRACES.indexOf(p) + 1) % TRACES.length];
+    return '<div class="stack"><section class="card big"><div class="stars big" aria-label="星 ' + TR.stars + ' / 3">' + [1,2,3].map(k => '<i class="' + (k <= TR.stars ? 'on' : '') + '">★</i>').join('') + '</div><h1>実行完了！</h1><p class="muted" style="margin:4px 0 0">' + esc(p.title) + ' を最後まで動かしました。' + TR.right + ' / ' + TR.asks + ' 問正解。</p></section>' +
+      '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">画面に出たもの</h3><div class="console">' + esc(TR.out) + '</div></section>' +
+      '<section class="done-list">' + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + TR.gain) + '</section>' +
+      '<button class="btn cta wide" data-trstart="' + nx.id + '">次のコード：' + esc(nx.title) + '</button><button class="btn ghost wide" data-trstart="' + p.id + '">もう一度</button><button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
+  }
+  const st = p.steps[TR.i], vk = Object.keys(TR.vars);
+  const code = '<pre class="code trcode">' + p.code.map((l, k) => '<span class="l' + (k === st.l ? ' now' : '') + '">' + esc(l) + '</span>').join('') + '</pre>';
+  const vars = '<div class="vars">' + (vk.length ? vk.map(k => '<div class="var' + (TR.changed.includes(k) ? ' chg' : '') + '"><span>' + esc(k) + '</span><b>' + esc(TR.vars[k]) + '</b></div>').join('') : '<span class="small muted">まだ変数はありません</span>') + '</div>';
+  let act = '';
+  if (st.ask) {
+    act = '<p class="trq">' + esc(st.ask.q) + '</p><div class="tropts">' + TR.ord.map(j => { let c = 'tropt'; if (TR.answered) { if (j === 0) c += ' right'; else if (j === TR.answered.j) c += ' wrong'; } return '<button class="' + c + '" data-tra="' + j + '"' + (TR.answered ? ' disabled' : '') + '>' + esc(st.ask.o[j]) + '</button>'; }).join('') + '</div>';
+    if (TR.answered) act += '<div class="trwhy ' + (TR.answered.ok ? 'ok' : 'ng') + '"><b>' + (TR.answered.ok ? 'そのとおり！' : '正解は「' + esc(st.ask.o[0]) + '」') + '</b>' + esc(st.ask.why) + '</div><button class="btn cta wide" data-trnext>次の行へ</button>';
+  } else act = '<button class="btn cta wide" data-trnext>次の行へ</button>';
+  const prog = Math.round(TR.i / p.steps.length * 100);
+  return '<div class="stack trwrap"><div class="row" style="gap:10px"><button class="qclose" data-go="fun" aria-label="やめる">' + I.x + '</button><div style="flex:1;min-width:0"><b style="font-family:var(--f-display)">' + esc(p.title) + '</b><div class="exprog" style="margin-top:4px"><i style="width:' + prog + '%"></i></div></div></div>' +
+    code +
+    (st.say ? '<p class="trsay">' + I.cpu + '<span>' + esc(st.say) + '</span></p>' : '') +
+    '<div class="trstate"><div><h4>変数</h4>' + vars + '</div><div><h4>画面</h4><div class="console">' + (TR.out ? esc(TR.out) : '<span class="muted">（まだ何も出ていない）</span>') + '<i class="caret"></i></div></div></div>' +
+    act + '</div>';
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.hasAttribute('data-spgo')) { sprintStart(); return; }
+  if (b.dataset.spa !== undefined) { sprintAnswer(b.dataset.spa === '1'); return; }
+  if (b.hasAttribute('data-spquit')) { SP = null; view = 'fun'; render(); return; }
+  if (b.dataset.trstart) { traceStart(b.dataset.trstart); return; }
+  if (b.dataset.tra !== undefined) { traceAnswer(+b.dataset.tra); return; }
+  if (b.hasAttribute('data-trnext')) { traceNext(); return; }
+});
+document.addEventListener('keydown', e => {
+  if (view !== 'sprint' || !SP || SP.phase !== 'play') return;
+  const k = e.key.toLowerCase();
+  if (k === 'o' || k === 'arrowleft') { e.preventDefault(); sprintAnswer(true); }
+  if (k === 'x' || k === 'arrowright') { e.preventDefault(); sprintAnswer(false); }
+});
 
 render();
 setTimeout(connectCloud, 0);
