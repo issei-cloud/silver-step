@@ -377,6 +377,50 @@ pre.code .l::before{counter-increment:ln;content:counter(ln);display:inline-bloc
 .trwhy.ok{background:var(--ok-soft)}.trwhy.ok b{color:var(--ok)}
 .trwhy.ng{background:var(--find-soft)}.trwhy.ng b{color:var(--find)}
 @media (prefers-reduced-motion: reduce){.spcard,.spcard.good,.spcard.bad,.countdown,.var.chg,.combo.hot,.stars.big i.on,.tropt.pop{animation:none}}
+/* あそぶ（充実版） */
+.h3s{font-size:.95rem;margin-bottom:8px}
+.bests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.bests span{background:rgba(255,255,255,.18);border-radius:12px;padding:6px 4px;text-align:center;font:700 .7rem var(--f-display)}
+.bests b{display:block;font-size:1.3rem;line-height:1.15}
+.trtotal{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:700 .78rem var(--f-display);color:var(--muted);margin-bottom:4px}
+.trtotal .bar{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
+.trtotal .bar i{display:block;height:100%;background:var(--xp);border-radius:999px}
+.trtotal b{color:var(--xp)}
+.trcard{position:relative}
+.trcard.rec{border-color:var(--cta)}
+.recb{position:absolute;top:-8px;right:8px;background:var(--cta);color:var(--cta-ink);font:800 .62rem var(--f-display);border-radius:999px;padding:1px 8px}
+.kind button{width:100%;font:inherit;color:var(--ink)}
+.kbest{margin-left:auto;font:700 .72rem var(--f-display);color:var(--muted);white-space:nowrap}
+.splog{display:flex;align-items:flex-end;gap:6px;height:90px;padding-top:14px}
+.splog div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}
+.splog i{display:block;width:100%;max-width:26px;background:var(--find);border-radius:6px 6px 2px 2px;opacity:.85}
+.splog div:last-child i{opacity:1;background:var(--cta)}
+.splog span{position:absolute;top:-14px;font:700 .66rem var(--f-mono);color:var(--muted)}
+.toggle{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:4px 14px;font:700 .8rem var(--f-display);cursor:pointer;color:var(--muted);min-width:64px;min-height:36px}
+.toggle[aria-pressed="true"]{background:var(--find);border-color:var(--find);color:#fff}
+.spstart{font-size:1.15rem;min-height:58px}
+.sphead{position:relative}
+.sppop{position:absolute;right:48px;top:44px;pointer-events:none;width:0;height:0}
+.spfloat{position:absolute;right:0;top:0;font:800 1.05rem var(--f-display);color:var(--ok);white-space:nowrap;animation:popup .9s ease-out forwards}
+.spfloat.hot{color:var(--cta);font-size:1.25rem}
+.spfloat.time{color:var(--find);font-size:1.3rem;top:18px}
+@keyframes popup{from{transform:translateY(0);opacity:1}to{transform:translateY(-34px);opacity:0}}
+.spmode{flex:1;font:700 .85rem var(--f-display);color:var(--find)}
+.spmode b{color:var(--ink);font-variant-numeric:tabular-nums}
+.spcard{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+.chtag{font:700 .68rem var(--f-display);color:var(--muted);background:var(--bg);border-radius:999px;padding:1px 10px}
+.rankline{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:12px}
+.rank{font:800 .9rem var(--f-display);border-radius:999px;padding:3px 14px;background:var(--brand-soft);color:var(--brand)}
+.rank.r2,.rank.r3{background:var(--find-soft);color:var(--find)}
+.rank.r4,.rank.r5{background:var(--xp);color:#2b1d00}
+.trintro{display:grid;gap:12px}
+.trgoal{display:flex;gap:8px;margin:0;font-size:.9rem}
+.trgoal svg{flex:0 0 auto;color:var(--brand);margin-top:2px}
+.trgoal b{display:block;font:800 .8rem var(--f-display);color:var(--brand)}
+.trhow{margin:0;padding-left:1.2em;font-size:.84rem;color:var(--muted);display:grid;gap:2px}
+.trscore{font:800 .85rem var(--f-mono);color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:2px 10px;flex:0 0 auto}
+.var b s{color:var(--muted);font-weight:600;font-size:.8rem;text-decoration-thickness:2px}
+.var b em{font-style:normal;color:var(--muted);font-size:.75rem;margin:0 3px}
 </style>
 </head>
 <body>
@@ -5918,7 +5962,9 @@ function mergeP(a, b){
   m.exam = a.exam && b.exam ? (a.exam.elapsed >= b.exam.elapsed ? a.exam : b.exam) : (a.exam || b.exam || null);
   const fa2 = a.fun || {}, fb2 = b.fun || {}, tr = Object.assign({}, fa2.trace || {});
   Object.entries(fb2.trace || {}).forEach(([k, v]) => tr[k] = Math.max(tr[k] || 0, v));
-  m.fun = {sprint:Math.max(fa2.sprint || 0, fb2.sprint || 0), trace:tr, oxMiss:[...new Set([...(fa2.oxMiss || []), ...(fb2.oxMiss || [])])].slice(-20)};
+  const sp = Object.assign({}, fa2.sp || {}); Object.entries(fb2.sp || {}).forEach(([k, v]) => sp[k] = Math.max(sp[k] || 0, v));
+  const logs = [], lk = new Set(); [...(fa2.spLog || []), ...(fb2.spLog || [])].forEach(x => { const key = x.t + '|' + x.m + '|' + x.s; if (!lk.has(key)) { lk.add(key); logs.push(x); } }); logs.sort((x, y) => x.t - y.t);
+  m.fun = {sprint:Math.max(fa2.sprint || 0, fb2.sprint || 0), sp, spLog:logs.slice(-30), trace:tr, oxMiss:[...new Set([...(fa2.oxMiss || []), ...(fb2.oxMiss || [])])].filter(x => typeof x === 'string').slice(-30)};
   const dayXp = Object.values(m.days).reduce((s, d) => s + (d.xp || 0), 0);
   m.xp = Math.max(a.xp || 0, b.xp || 0, dayXp);
   m.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
@@ -6460,62 +6506,143 @@ window.addEventListener('pagehide', flushSave);
 I.game = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10.5v4M5 12.5h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="15.5" cy="11.5" r="1.2" fill="currentColor"/><circle cx="18" cy="14" r="1.2" fill="currentColor"/></svg>';
 I.cpu = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 10h4v4h-4z" fill="currentColor"/></svg>';
 
-/* ○×の問題：[正しければ1, 文, ひとこと理由] */
+/* ============ あそぶ：データ ============ */
+/* ○×の問題：[正しければ1, 文, ひとこと理由, 章] */
 const OX = [
-[1,'javac に渡すのはファイル名（Main.java）','java に渡すのはクラス名（拡張子なし）。'],
-[0,'java コマンドには Main.class のように拡張子を付けて渡す','java Main のようにクラス名だけを渡す。'],
-[1,'String・Math・System は import なしで使える','どれも java.lang パッケージだから。'],
-[0,'ArrayList は import なしで使える','java.util なので import が必要。'],
-[1,'package 文はファイルの先頭に書く','順番は package → import → class。'],
-[0,'1つのファイルに public クラスをいくつでも書ける','public クラスは1ファイルに1つまで。'],
-[1,'配列の番号は 0 から始まる','長さ 3 なら番号は 0・1・2。'],
-[0,'配列の長さは a.length() で調べる','配列は a.length（カッコなし）。文字列は s.length()。'],
-[1,'文字列の長さは s.length() で調べる','String はメソッドなので ( ) が付く。'],
-[1,'int の配列を new すると、中身は 0 で埋まる','boolean は false、参照型は null。'],
-[0,'ローカル変数は自動で 0 が入る','ローカル変数は値を入れないと使えない（コンパイルエラー）。'],
-[1,'"Java".charAt(0) は J','番号 0 は先頭の文字。'],
-[0,'"Java".substring(1, 3) は "ava"','終わりの番号は含まないので "av"。'],
-[1,'String は一度作ると中身が変わらない','toUpperCase なども新しい String を返すだけ。'],
-[1,'StringBuilder の append は自分自身を書き換える','だから戻り値を受け取らなくても変わる。'],
-[0,'文字列の中身の比較には == を使う','中身の比較は equals。== は同じ物かどうか。'],
-[1,'1 + 2 + "3" は "33"','左から：1+2=3、3+"3"="33"。'],
-[0,'"1" + 2 + 3 は "15"','文字列のあとは連結なので "123"。'],
-[1,'10 % 3 は 1','% は割った余り。'],
-[0,'7 / 2 は 3.5','int どうしの割り算は切り捨てで 3。'],
-[1,'&& は左が false なら右を実行しない','短絡評価。& 1つなら右も実行する。'],
-[0,'int x = 3.5; はコンパイルできる','double を int に入れるにはキャストが必要。'],
-[1,'x += 2.5 は x が int でもコンパイルできる','複合代入は自動でキャストされる。'],
-[1,'var はローカル変数にだけ使える','フィールドや引数には使えない。'],
-[0,'var x; と書いて、あとで値を入れてもよい','var は宣言と同時に初期化が必要。'],
-[1,'switch で break がないと、下の case も実行される','フォールスルーという。'],
-[0,'do-while は条件が false なら1回も実行されない','do-while は最低1回は実行される。'],
-[1,'continue はループの残りを飛ばして次の回へ進む','break はループを抜ける。'],
-[0,'break はプログラム全体を終了させる','今いるループ（か switch）を抜けるだけ。'],
-[1,'for (int x : a) の x には配列の中身が順に入る','番号ではなく中身が入る。'],
-[1,'コンストラクタには戻り値の型を書かない','void を付けるとただのメソッドになる。'],
-[0,'コンストラクタを1つも書かないと new できない','書かなければ引数なしのコンストラクタが自動で作られる。'],
-[1,'static フィールドは全インスタンスで共有される','クラスに1つだけある。'],
-[0,'static メソッドの中で this が使える','static はインスタンスなしで動くので this は使えない。'],
-[1,'private のメンバーは同じクラスの中からしか使えない','いちばん狭いアクセス修飾子。'],
-[1,'引数とフィールドが同じ名前なら、フィールドは this.x と書く','x だけだと引数の方になる。'],
-[1,'オーバーロードは引数の型か数を変える','戻り値の型だけ変えてもダメ。'],
-[0,'戻り値の型だけ違うメソッドを並べるとオーバーロードになる','引数が同じならコンパイルエラー。'],
-[1,'extends できるクラスは1つだけ','単一継承。インタフェースは複数 OK。'],
-[0,'abstract クラスは new できる','未完成なので new できない。'],
-[1,'子のコンストラクタは、まず親のコンストラクタを呼ぶ','書かなくても super() が自動で入る。'],
-[1,'Animal a = new Dog(); の a.cry() は Dog の cry が動く','メソッドは中身（new したもの）で決まる。'],
-[0,'フィールドも、new したものの方が使われる','フィールドは変数の型で決まる。'],
-[1,'インタフェースの default メソッドは中身を持てる','実装クラスで書かなくても使える。'],
-[0,'オーバーライドでアクセス修飾子を狭くしてもよい','広くするのは OK、狭くするのはダメ。'],
-[1,'Predicate の判定は test メソッドで行う','Function は apply、Supplier は get、Consumer は accept。'],
-[1,'x -> x * 2 は「x を受け取って 2倍を返す」ラムダ式','引数 -> 処理 の形。'],
-[1,'finally は例外があってもなくても実行される','return があっても実行される。'],
-[0,'catch は親の例外を先に書いてもよい','親が先だと子の catch に届かずコンパイルエラー。'],
-[1,'Exception（チェック例外）は throws か try-catch が必要','RuntimeException の仲間は不要。'],
-[0,'NullPointerException はコンパイル時に見つかる','実行してみて初めて起きる。'],
-[1,'Integer.parseInt("abc") は NumberFormatException','数値にできない文字列だから。'],
-[1,'配列の範囲外の番号は ArrayIndexOutOfBoundsException','実行時に起きる。'],
-[0,'try のあとには catch が必ず必要','catch か finally のどちらかがあればよい。']
+[1,'javac に渡すのはファイル名（Main.java）','java に渡すのはクラス名（拡張子なし）。',1],
+[0,'java コマンドには Main.class のように拡張子を付けて渡す','java Main のようにクラス名だけを渡す。',1],
+[1,'String・Math・System は import なしで使える','どれも java.lang パッケージだから。',1],
+[0,'ArrayList は import なしで使える','java.util なので import が必要。',1],
+[1,'package 文はファイルの先頭に書く','順番は package → import → class。',1],
+[0,'1つのファイルに public クラスをいくつでも書ける','public クラスは1ファイルに1つまで。',1],
+[1,'配列の番号は 0 から始まる','長さ 3 なら番号は 0・1・2。',2],
+[0,'配列の長さは a.length() で調べる','配列は a.length（カッコなし）。文字列は s.length()。',2],
+[1,'文字列の長さは s.length() で調べる','String はメソッドなので ( ) が付く。',2],
+[1,'int の配列を new すると、中身は 0 で埋まる','boolean は false、参照型は null。',2],
+[0,'ローカル変数は自動で 0 が入る','ローカル変数は値を入れないと使えない（コンパイルエラー）。',2],
+[1,'"Java".charAt(0) は J','番号 0 は先頭の文字。',2],
+[0,'"Java".substring(1, 3) は "ava"','終わりの番号は含まないので "av"。',2],
+[1,'String は一度作ると中身が変わらない','toUpperCase なども新しい String を返すだけ。',2],
+[1,'StringBuilder の append は自分自身を書き換える','だから戻り値を受け取らなくても変わる。',2],
+[0,'文字列の中身の比較には == を使う','中身の比較は equals。== は同じ物かどうか。',2],
+[1,'1 + 2 + "3" は "33"','左から：1+2=3、3+"3"="33"。',3],
+[0,'"1" + 2 + 3 は "15"','文字列のあとは連結なので "123"。',3],
+[1,'10 % 3 は 1','% は割った余り。',3],
+[0,'7 / 2 は 3.5','int どうしの割り算は切り捨てで 3。',3],
+[1,'&& は左が false なら右を実行しない','短絡評価。& 1つなら右も実行する。',3],
+[0,'int x = 3.5; はコンパイルできる','double を int に入れるにはキャストが必要。',2],
+[1,'x += 2.5 は x が int でもコンパイルできる','複合代入は自動でキャストされる。',3],
+[1,'var はローカル変数にだけ使える','フィールドや引数には使えない。',2],
+[0,'var x; と書いて、あとで値を入れてもよい','var は宣言と同時に初期化が必要。',2],
+[1,'switch で break がないと、下の case も実行される','フォールスルーという。',3],
+[0,'do-while は条件が false なら1回も実行されない','do-while は最低1回は実行される。',4],
+[1,'continue はループの残りを飛ばして次の回へ進む','break はループを抜ける。',4],
+[0,'break はプログラム全体を終了させる','今いるループ（か switch）を抜けるだけ。',4],
+[1,'for (int x : a) の x には配列の中身が順に入る','番号ではなく中身が入る。',4],
+[1,'コンストラクタには戻り値の型を書かない','void を付けるとただのメソッドになる。',5],
+[0,'コンストラクタを1つも書かないと new できない','書かなければ引数なしのコンストラクタが自動で作られる。',5],
+[1,'static フィールドは全インスタンスで共有される','クラスに1つだけある。',5],
+[0,'static メソッドの中で this が使える','static はインスタンスなしで動くので this は使えない。',5],
+[1,'private のメンバーは同じクラスの中からしか使えない','いちばん狭いアクセス修飾子。',5],
+[1,'引数とフィールドが同じ名前なら、フィールドは this.x と書く','x だけだと引数の方になる。',5],
+[1,'オーバーロードは引数の型か数を変える','戻り値の型だけ変えてもダメ。',5],
+[0,'戻り値の型だけ違うメソッドを並べるとオーバーロードになる','引数が同じならコンパイルエラー。',5],
+[1,'extends できるクラスは1つだけ','単一継承。インタフェースは複数 OK。',6],
+[0,'abstract クラスは new できる','未完成なので new できない。',6],
+[1,'子のコンストラクタは、まず親のコンストラクタを呼ぶ','書かなくても super() が自動で入る。',6],
+[1,'Animal a = new Dog(); の a.cry() は Dog の cry が動く','メソッドは中身（new したもの）で決まる。',6],
+[0,'フィールドも、new したものの方が使われる','フィールドは変数の型で決まる。',6],
+[1,'インタフェースの default メソッドは中身を持てる','実装クラスで書かなくても使える。',6],
+[0,'オーバーライドでアクセス修飾子を狭くしてもよい','広くするのは OK、狭くするのはダメ。',6],
+[1,'Predicate の判定は test メソッドで行う','Function は apply、Supplier は get、Consumer は accept。',6],
+[1,'x -> x * 2 は「x を受け取って 2倍を返す」ラムダ式','引数 -> 処理 の形。',6],
+[1,'finally は例外があってもなくても実行される','return があっても実行される。',7],
+[0,'catch は親の例外を先に書いてもよい','親が先だと子の catch に届かずコンパイルエラー。',7],
+[1,'Exception（チェック例外）は throws か try-catch が必要','RuntimeException の仲間は不要。',7],
+[0,'NullPointerException はコンパイル時に見つかる','実行してみて初めて起きる。',7],
+[1,'Integer.parseInt("abc") は NumberFormatException','数値にできない文字列だから。',7],
+[1,'配列の範囲外の番号は ArrayIndexOutOfBoundsException','実行時に起きる。',7],
+[0,'try のあとには catch が必ず必要','catch か finally のどちらかがあればよい。',7],
+[1,'main メソッドは public static void main(String[] args) と書く','これが JVM が探す入口の形。',1],
+[0,'main メソッドの引数名は args でなければならない','名前は自由。String[] という型が大事。',1],
+[1,'main(String... args) と書いた main も入口になれる','可変長引数も String の配列として扱われる。',1],
+[1,'java Main.java で、javac なしで直接実行できる','ソースファイルモード（Java 11〜）。',1],
+[0,'import java.util.*; で java.util.function のクラスも使える','* はそのパッケージ直下だけ。下のパッケージは含まない。',1],
+[1,'同じパッケージのクラスは import なしで使える','同じパッケージは最初から見える。',1],
+[0,'import 文は class の { } の中に書く','import はクラスの外、package の後ろ。',1],
+[1,'JVM があれば、同じ .class ファイルを別の OS でも動かせる','一度書けば、どこでも動く。',1],
+[0,'Java のコメントは # で書ける','Java は // と /* */。',1],
+[1,'java Main a b のとき、args は {"a", "b"}','クラス名のうしろだけが args に入る。',1],
+[1,'long の数値は 100L のように L を付けて書ける','int の範囲を超える数には L が必要。',2],
+[0,'float f = 1.5; はコンパイルできる','1.5 は double。float には 1.5f と書く。',2],
+[1,'char は \'A\' のようにシングルクォートで書く','"A" と書くと String。',2],
+[1,'1_000_000 のように数値に _ を入れられる','読みやすくするための区切り。',2],
+[0,'boolean 型の変数に 0 や 1 を入れられる','boolean は true か false だけ。',2],
+[1,'s.toUpperCase() を呼んでも、s の中身は変わらない','String は不変。結果は新しい String。',2],
+[1,'"Java".indexOf("v") は 2','J=0、a=1、v=2。',2],
+[0,'"Java".indexOf("x") は 0','見つからないときは -1。',2],
+[1,'"  hi  ".trim() は前後の空白を取り除く','真ん中の空白は残る。',2],
+[0,'StringBuilder どうしの equals は中身を比べる','StringBuilder の equals は == と同じ（同じ物か）。',2],
+[1,'"a".repeat(3) は "aaa"','Java 11 から使える。',2],
+[1,'ArrayList の要素数は size() で調べる','配列は length、String は length()、リストは size()。',2],
+[0,'int[] a = new int[]; はコンパイルできる','new で作るときは長さか初期値が必要。',2],
+[1,'int[] a = {1, 2, 3}; は宣言と初期化を一度にしている','new int[]{1, 2, 3} と同じ。',2],
+[1,'テキストブロックは """ で始めて """ で終わる','複数行の文字列を書ける（Java 15〜）。',2],
+[1,'5 / 2.0 は 2.5','片方が double なら double の計算になる。',3],
+[0,'(int) 3.9 は 4','キャストは切り捨てなので 3。',3],
+[1,'x が 5 のとき、式の中の x++ は 5 として使われる','後置は「使ってから増やす」。',3],
+[1,'++x は、増やしてから使う','前置は先に +1。',3],
+[0,'= と == は同じ意味','= は代入、== は比較。',3],
+[1,'!true は false','! は true と false をひっくり返す。',3],
+[0,'| は左が true なら右を実行しない','| は必ず両方実行。省略するのは ||。',3],
+[1,'switch の -> 形式では、break がなくても下へ流れない','アロー形式はフォールスルーしない。',3],
+[0,'switch の case に double の値を書ける','long・float・double・boolean は switch に使えない。',3],
+[1,'switch に String を使える','Java 7 から使える。',3],
+[0,'byte b = 10; b = b + 1; はコンパイルできる','b + 1 は int になるのでキャストが必要。',3],
+[1,'for (;;) { } は無限ループになる','条件を省略すると true 扱い。',4],
+[0,'while (false) { … } はそのままコンパイルできる','中身が到達不能になり、コンパイルエラー。',4],
+[1,'ラベル付き break で、外側のループごと抜けられる','outer: for … break outer;',4],
+[1,'for の ( ) の中で宣言した変数は、ループの外では使えない','有効範囲は for の中だけ。',4],
+[0,'拡張 for の x に代入すると、配列の中身も変わる','x はコピー。配列は変わらない。',4],
+[1,'do { } while (条件); の最後にはセミコロンが必要','忘れるとコンパイルエラー。',4],
+[1,'for (int i = 0, j = 10; i < j; i++, j--) と書ける','同じ型ならカンマで並べられる。',4],
+[0,'同じブロックで break のすぐあとに書いた文も実行される','到達不能になり、コンパイルエラー。',4],
+[1,'内側のループの break は、内側のループだけを抜ける','外側のループは続く。',4],
+[1,'this(…) で、同じクラスの別のコンストラクタを呼べる','コンストラクタの1行目に書く。',5],
+[0,'this(…) はコンストラクタのどこに書いてもよい','必ず最初の1行目。',5],
+[1,'引数ありのコンストラクタだけを書くと、new X() はできない','デフォルトコンストラクタは作られなくなる。',5],
+[1,'メソッドに int を渡すと、値のコピーが渡る','呼び出し先で変えても、元は変わらない。',5],
+[1,'メソッドに配列を渡して中身を変えると、呼び出し元にも反映される','同じ配列を指しているから。',5],
+[0,'static メソッドから、static でないフィールドを直接使える','インスタンスがないと使えない。',5],
+[1,'static メソッドは クラス名.メソッド名() で呼べる','new しなくてよい。',5],
+[0,'void のメソッドに return; と書くとコンパイルエラー','値なしの return; なら書ける。',5],
+[1,'可変長引数 int... a は、メソッドの中では配列として使う','a.length で個数がわかる。',5],
+[0,'protected はいちばん公開範囲が広い','広い順に public → protected → なし → private。',5],
+[1,'すべてのクラスは、書かなくても Object を継承している','extends を省略すると Object。',6],
+[0,'final クラスは継承できる','final クラスは継承できない。',6],
+[1,'final メソッドはオーバーライドできない','子で書き直せない。',6],
+[1,'インタフェースのメソッドは、何も付けなければ public abstract','default や static を付けない場合。',6],
+[0,'インタフェースのフィールドはあとから書き換えられる','自動で public static final（定数）になる。',6],
+[1,'(Dog) animal は、中身が Dog でないと実行時に ClassCastException','コンパイルが通っても、実行時に失敗することがある。',6],
+[1,'record は、ゲッターや equals を自動で作ってくれる','record Point(int x, int y) { } だけで使える。',6],
+[0,'record のフィールドはあとから変更できる','すべて final なので変更できない。',6],
+[1,'obj instanceof String s が true なら、s を String として使える','パターンマッチング（Java 16〜）。',6],
+[1,'Supplier は引数なしで値を返す','実行は get()。',6],
+[0,'Consumer は値を返す','受け取るだけで戻り値なし（accept）。',6],
+[1,'ラムダ式で使うローカル変数は、あとで値を変えてはいけない','実質的に final でないとコンパイルエラー。',6],
+[1,'list.forEach(s -> System.out.println(s)) で全要素を表示できる','forEach は Consumer を受け取る。',6],
+[0,'abstract メソッドには { } で中身を書く','中身なしで ; で終える。',6],
+[1,'RuntimeException の仲間は、catch しなくてもコンパイルできる','非チェック例外という。',7],
+[0,'Error は、ふつう catch して処理するものだ','OutOfMemoryError など回復が難しいもの。',7],
+[1,'throw は例外を投げる、throws は投げるかもと宣言する','s が付く方が宣言。',7],
+[1,'multi-catch は catch (A | B e) と書く','| でつなぐ。',7],
+[0,'multi-catch で、親子関係にある例外を並べてもよい','親子を | で並べるとコンパイルエラー。',7],
+[1,'try-with-resources のリソースは、自動で close される','AutoCloseable を実装している必要がある。',7],
+[1,'try-with-resources で開いた複数のリソースは、逆の順番で閉じる','あとに開いたものから閉じる。',7],
+[0,'try と finally の両方に return があると、try の値が返る','finally の return が勝つ。',7],
+[1,'オーバーライドで、親より広いチェック例外は throws できない','狭くするか、なくすのは OK。',7],
+[1,'int を 0 で割ると ArithmeticException','double の 0.0 割りは例外ではなく Infinity。',7],
+[1,'e.getMessage() で、例外を作ったときのメッセージがわかる','new Exception("x") なら "x"。',7]
 ];
 
 /* なりきりCPU：コードを1行ずつ、自分がコンピュータになって動かす
@@ -6589,92 +6716,271 @@ steps:[
 {l:5, say:'C を表示します。', out:'C'},
 {l:7, ask:{q:'finally は？', o:['必ず実行される','例外が起きたので飛ばす'], why:'finally は例外があってもなくても必ず動きます。'}, out:'D'},
 {l:9, ask:{q:'E は表示される？', o:['される','されない'], why:'例外は catch で処理済み。そのあとは普通に続きます。'}, out:'E'},
-{l:9, ask:{q:'画面の表示ぜんぶは？', o:['ACDE','ABCDE','ACD'], why:'B だけが飛ばされました。'}}]}
-];
+{l:9, ask:{q:'画面の表示ぜんぶは？', o:['ACDE','ABCDE','ACD'], why:'B だけが飛ばされました。'}}]},
 
-const SPRINT_MS = 60000;
+{id:'t15', ch:1, title:'args の中身', sub:'コマンドで渡した文字はどこへ？', code:[
+'// java Main red blue','public static void main(String[] args) {','    System.out.print(args.length);','    for (String a : args) {','        System.out.print(" " + a.charAt(0));','    }','}'],
+steps:[
+{l:0, say:'まずコマンドを見ます。java Main のうしろに red と blue。'},
+{l:1, ask:{q:'args の中身は？', o:['{"red", "blue"}','{"Main", "red", "blue"}','{"java", "Main", "red", "blue"}'], why:'クラス名のうしろに書いた文字だけが args に入ります。'}, post:{args:'{"red","blue"}'}},
+{l:2, ask:{q:'args.length は？', o:['2','3'], why:'要素は red と blue の2つ。'}, out:'2'},
+{l:3, say:'拡張 for。a に 1つ目の要素が入ります。', pre:{a:'"red"'}},
+{l:4, ask:{q:'追加で表示されるのは？', o:['" r"','" red"','" 0"'], why:'charAt(0) は先頭の1文字。'}, out:' r'},
+{l:3, say:'次の要素。', pre:{a:'"blue"'}},
+{l:4, say:'" b" を表示。', out:' b'},
+{l:3, say:'要素がなくなったので、ループ終わり。', pre:{a:null}},
+{l:6, ask:{q:'画面の表示ぜんぶは？', o:['2 r b','3 M r b','2 red blue'], why:'個数の 2、それぞれの頭文字 r と b。'}}]},
+
+{id:'t12', ch:2, title:'String は変わらない', sub:'受け取らない結果は消える', code:[
+'String s = "java";','s.toUpperCase();','s.concat("!");','String t = s.replace(\'a\', \'o\');','System.out.println(s + " " + t);'],
+steps:[
+{l:0, say:'s に "java" を入れます。', pre:{s:'"java"'}},
+{l:1, ask:{q:'toUpperCase() のあと、s は？', o:['"java"（変わらない）','"JAVA"'], why:'新しい "JAVA" は作られるけれど、受け取っていないので捨てられます。String は不変。'}},
+{l:2, ask:{q:'concat("!") のあと、s は？', o:['"java"（変わらない）','"java!"'], why:'これも新しい文字列を作るだけ。s は "java" のまま。'}},
+{l:3, ask:{q:'t の中身は？', o:['"jovo"','"java"','"jova"'], why:'replace はすべての a を o に。今度は結果を t で受け取っています。'}, post:{t:'"jovo"'}},
+{l:4, ask:{q:'画面の表示は？', o:['java jovo','JAVA! jovo','jovo jovo'], why:'s は最後まで "java"。変わったのは受け取った t だけ。'}, out:'java jovo'}]},
+
+{id:'t13', ch:2, title:'ループ中の remove', sub:'詰まって1つ飛ばされる', code:[
+'var list = new ArrayList<>(List.of(2, 4, 5));','for (int i = 0; i < list.size(); i++) {','    if (list.get(i) % 2 == 0) list.remove(i);','}','System.out.println(list);'],
+steps:[
+{l:0, say:'リストは [2, 4, 5]。', pre:{list:'[2, 4, 5]'}},
+{l:1, say:'i = 0。size() は 3 なので中へ。', pre:{i:0}},
+{l:2, ask:{q:'list.get(0) は？', o:['2（偶数）→ remove(0)','4（偶数）→ remove(0)','5（奇数）→ 何もしない'], why:'0 番目は 2。remove(i) で消すと、うしろが前に詰まります。'}, post:{list:'[4, 5]'}},
+{l:1, say:'i++ で i = 1。', pre:{i:1}, ask:{q:'list.get(1) は？', o:['5','4'], why:'詰まったので、4 は 0 番目に移動しています。'}},
+{l:2, say:'5 は奇数なので何もしません。'},
+{l:1, say:'i++ で i = 2。', pre:{i:2}, ask:{q:'2 < list.size() は？', o:['false（終わり）','true'], why:'size() は 2 に減っているので終わり。'}},
+{l:4, say:'ループが終わったので i は消えます。', pre:{i:null}, ask:{q:'表示は？', o:['[4, 5]','[5]','[2, 4, 5]'], why:'4 は前に詰まったせいで、調べられずに残りました。'}, out:'[4, 5]'}]},
+
+{id:'t7', ch:3, title:'i++ と ++i', sub:'前置と後置を同じ式で', code:[
+'int i = 1;','int a = i++ + ++i;','System.out.println(a + " " + i);'],
+steps:[
+{l:0, say:'i に 1 を入れます。', pre:{i:1}},
+{l:1, say:'左から計算します。まず i++（後置）。', ask:{q:'i++ が式に渡す値は？', o:['1','2'], why:'後置は「使ってから増やす」。式には 1 を渡して、i は 2 に。'}, post:{i:2}},
+{l:1, say:'次に ++i（前置）。今の i は 2。', ask:{q:'++i が式に渡す値は？', o:['3','2'], why:'前置は「増やしてから使う」。i を 3 にしてから 3 を渡します。'}, post:{i:3}},
+{l:1, ask:{q:'a はいくつ？', o:['4','5','3'], why:'1 + 3 = 4'}, post:{a:4}},
+{l:2, ask:{q:'表示は？', o:['4 3','4 2','5 3'], why:'a は 4、i は 3 になっています。'}, out:'4 3'}]},
+
+{id:'t14', ch:3, title:'switch 式とアロー', sub:'値を返す switch', code:[
+'String day = "SAT";','int n = switch (day) {','    case "SAT", "SUN" -> 0;','    case "MON" -> 1;','    default -> {','        System.out.print("work ");','        yield 5;','    }','};','System.out.println(n);'],
+steps:[
+{l:0, say:'day に "SAT" を入れます。', pre:{day:'"SAT"'}},
+{l:1, ask:{q:'int n = switch (…) { … }; は何をする？', o:['合う case の値を n に入れる','合う case から下を全部実行する'], why:'switch 式は「値を返す switch」。選ばれた値が n に入ります。'}},
+{l:2, ask:{q:'"SAT" に合うのは？', o:['case "SAT", "SUN"','default'], why:'カンマで複数の値を並べられます。'}, post:{n:0}},
+{l:3, ask:{q:'-> のあと、下の case へ流れる？', o:['流れない','流れる'], why:'アロー形式は break がなくてもフォールスルーしません。'}},
+{l:9, ask:{q:'画面の表示は？', o:['0','work 0','5'], why:'default は通らないので work も出ません。'}, out:'0'}]},
+
+{id:'t8', ch:4, title:'ラベル付きループ', sub:'continue outer と break outer', code:[
+'outer:','for (int i = 1; i <= 3; i++) {','    for (int j = 1; j <= 3; j++) {','        if (j == 2) continue outer;','        if (i == 3) break outer;','        System.out.print(i + "" + j + " ");','    }','}'],
+steps:[
+{l:1, say:'外側のループ。i = 1。', pre:{i:1}},
+{l:2, say:'内側のループ。j = 1。', pre:{j:1}},
+{l:3, ask:{q:'j == 2 は？', o:['false（次の行へ）','true'], why:'j は 1。'}},
+{l:4, ask:{q:'i == 3 は？', o:['false（次の行へ）','true'], why:'i は 1。'}},
+{l:5, say:'"11 " を表示。', out:'11 '},
+{l:2, say:'j++ で j = 2。', pre:{j:2}},
+{l:3, ask:{q:'j == 2 なので continue outer。次はどこへ？', o:['外側の i++ へ（内側は打ち切り）','内側の j++ へ','ループ全体を抜ける'], why:'continue outer は「outer の次の回へ」。内側の残りは捨てます。'}},
+{l:1, say:'i++ で i = 2。内側は最初からやり直すので、j はいったん消えます。', pre:{j:null, i:2}},
+{l:2, say:'j = 1 から。', pre:{j:1}},
+{l:5, ask:{q:'表示されるのは？', o:['"21 "','"12 "','"22 "'], why:'i が 2、j が 1 なので "21 "。'}, out:'21 '},
+{l:3, say:'j = 2 になって、また continue outer。', pre:{j:2}},
+{l:1, say:'i++ で i = 3。', pre:{j:null, i:3}},
+{l:2, say:'j = 1 から。', pre:{j:1}},
+{l:4, ask:{q:'i == 3 なので break outer。どうなる？', o:['外側のループごと抜ける','内側だけ抜ける'], why:'ラベル付き break は、そのラベルのループを抜けます。'}},
+{l:7, say:'ループを抜けたので i と j は消えます。', pre:{i:null, j:null}, ask:{q:'画面の表示ぜんぶは？', o:['11 21 ','11 12 21 22 ','11 21 31 '], why:'j が 2 になるたびに外側へ、i が 3 で全部終わり。'}}]},
+
+{id:'t9', ch:5, title:'this() の呼び出し', sub:'コンストラクタからコンストラクタへ', code:[
+'class Item {','    String name; int qty;','    Item(String name) {','        this(name, 1);','        System.out.print("B");','    }','    Item(String name, int qty) {','        this.name = name; this.qty = qty;','        System.out.print("A");','    }','}','// main','Item it = new Item("pen");','System.out.print(" " + it.name + it.qty);'],
+steps:[
+{l:12, say:'new Item("pen")。引数は String が1つ。', ask:{q:'呼ばれるコンストラクタは？', o:['Item(String name)','Item(String name, int qty)'], why:'引数の数と型が合う方が選ばれます。'}},
+{l:3, ask:{q:'this(name, 1) は何をする？', o:['もう一つのコンストラクタを呼ぶ','this という変数に代入する'], why:'this(…) は同じクラスの別のコンストラクタ呼び出し。必ず1行目に書きます。'}},
+{l:7, say:'フィールドに "pen" と 1 を入れます。', pre:{name:'"pen"', qty:1}},
+{l:8, say:'A を表示。', out:'A'},
+{l:4, ask:{q:'呼んだコンストラクタが終わったら？', o:['元のコンストラクタに戻って B を表示','そのまま new が終わる'], why:'呼んだ側に戻って、続きの行を実行します。'}, out:'B'},
+{l:13, ask:{q:'画面の表示ぜんぶは？', o:['AB pen1','BA pen1','A pen1'], why:'呼ばれた側の A → 戻って B → 最後に pen1。'}, out:' pen1'}]},
+
+{id:'t10', ch:6, title:'親のコンストラクタと上書き', sub:'作り途中でも中身は B', code:[
+'class A {','    A() { System.out.print("A"); hello(); }','    void hello() { System.out.print("a"); }','}','class B extends A {','    B() { System.out.print("B"); }','    void hello() { System.out.print("b"); }','}','// main','new B();'],
+steps:[
+{l:9, say:'new B() で B のコンストラクタへ。'},
+{l:5, ask:{q:'B() の中で、最初に起きることは？', o:['親の A() が呼ばれる','B を表示する'], why:'1行目に、書かなくても super() が隠れています。'}},
+{l:1, say:'A() の中。まず A を表示。', out:'A'},
+{l:1, ask:{q:'A() の中の hello() は、どちらが動く？', o:['B の hello（b）','A の hello（a）'], why:'作っているのは B。メソッドは中身で決まるので、オーバーライドした B の hello。'}, out:'b'},
+{l:5, say:'A() が終わって B() に戻り、B を表示。', out:'B'},
+{l:9, ask:{q:'画面の表示ぜんぶは？', o:['AbB','AaB','BAb'], why:'親のコンストラクタ → 上書きされたメソッド → 子のコンストラクタの残り。'}}]},
+
+{id:'t11', ch:7, title:'finally と return', sub:'返す値はいつ決まる？', code:[
+'static int f() {','    int x = 1;','    try {','        return x;','    } finally {','        x = 2;','        System.out.print("F");','    }','}','// main','System.out.print(f());'],
+steps:[
+{l:10, say:'f() を呼びます。'},
+{l:1, say:'x に 1 を入れます。', pre:{x:1}},
+{l:3, ask:{q:'return x で、返す値は？', o:['1（この時点の値で決まる）','あとで決まる'], why:'return の時点で「返す値 1」が控えられます。'}, post:{'返す値':1}},
+{l:5, ask:{q:'return したのに finally は動く？', o:['動く','動かない'], why:'finally は return があっても必ず動きます。'}, post:{x:2}},
+{l:6, say:'F を表示。', out:'F'},
+{l:10, ask:{q:'f() が返すのは？', o:['1','2'], why:'控えておいた 1 が返ります。x を 2 にしても、返す値は変わりません。'}, post:{x:null, '返す値':null}, out:'1'},
+{l:10, ask:{q:'画面の表示ぜんぶは？', o:['F1','1F','F2'], why:'f() の中で F、戻ってきた 1 を表示。'}}]}
+].sort((a, b) => a.ch - b.ch);
+
+/* ============ あそぶ：しくみ ============ */
 const MARK = {o:w => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="3.2"/></svg>', x:w => '<svg width="' + w + '" height="' + w + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>'};
+const SPMODE = {
+  t60:{label:'60秒', sub:'定番。5コンボごとに +2秒', ms:60000},
+  t30:{label:'30秒', sub:'ちょこっと1回', ms:30000},
+  sd:{label:'サドンデス', sub:'時間無制限・1ミスで終了', ms:0}
+};
+const RANKS = ['ウォームアップ中','コード見習い','テンポよし','反射神経エンジニア','JVM の申し子','伝説のコンパイラ'];
+const RANK_AT = {t60:[0,8,15,23,32,42], t30:[0,4,8,12,17,22], sd:[0,3,6,10,15,22], rev:[0,99,99,99,99,99]};
 let SP = null, TR = null;
 function funState(){ return P.fun || (P.fun = {}); }
-function funDone(gain){
-  const d = today(); d.fun = (d.fun || 0) + 1; d.xp += gain; P.xp += gain;
-}
+function funDone(gain){ const d = today(); d.fun = (d.fun || 0) + 1; d.xp += gain; P.xp += gain; }
+const pref = (k, d) => { try { const v = localStorage.getItem('silver-step-' + k); return v === null ? d : JSON.parse(v); } catch(e) { return d; } };
+const setPref = (k, v) => { try { localStorage.setItem('silver-step-' + k, JSON.stringify(v)); } catch(e) {} };
+ui.sp = Object.assign({mode:'t60', ch:0}, pref('sp', {}));
+let soundOn = pref('sound', true);
 
+/* 効果音（端末がマナーモードだと鳴らないことがあります） */
+let AC = null;
+function snd(kind){
+  if (!soundOn) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    const N = {ok:[[880,.07],[1320,.08]], ng:[[196,.2,'square']], combo:[[660,.07],[880,.07],[1175,.14]], tick:[[520,.06]], go:[[1046,.18]], end:[[784,.1],[988,.1],[1318,.24]], bonus:[[1568,.06],[2093,.09]]}[kind];
+    let at = AC.currentTime;
+    N.forEach(([f, d, type]) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = type || 'sine'; o.frequency.value = f; g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(type ? .06 : .16, at + .01); g.gain.exponentialRampToValueAtTime(.0001, at + d); o.connect(g); g.connect(AC.destination); o.start(at); o.stop(at + d + .03); at += d * .85; });
+  } catch(e) {}
+}
+const stars3 = (s, big) => '<span class="stars' + (big ? ' big' : '') + '" aria-label="星 ' + s + ' / 3">' + [1,2,3].map(k => '<i class="' + (k <= s ? 'on' : '') + '">★</i>').join('') + '</span>';
+
+/* ---- あそぶ画面 ---- */
 function funHTML(){
-  const F = funState(), best = F.sprint || 0, stars = F.trace || {};
-  const card = t => { const s = stars[t.id] || 0; return '<button class="trcard" data-trstart="' + t.id + '"><span class="trch">第' + t.ch + '章</span><b>' + esc(t.title) + '</b><small>' + esc(t.sub) + '</small><span class="stars" aria-label="星 ' + s + ' / 3">' + [1,2,3].map(k => '<i class="' + (k <= s ? 'on' : '') + '">★</i>').join('') + '</span></button>'; };
+  const F = funState(), stars = F.trace || {}, sp = F.sp || {};
+  const got = TRACES.reduce((a, t) => a + (stars[t.id] || 0), 0), max = TRACES.length * 3;
+  const rec = TRACES.find(t => !stars[t.id]) || TRACES.find(t => stars[t.id] < 3);
+  const card = t => { const s = stars[t.id] || 0; return '<button class="trcard' + (rec && rec.id === t.id ? ' rec' : '') + '" data-trstart="' + t.id + '">' + (rec && rec.id === t.id ? '<span class="recb">おすすめ</span>' : '') + '<span class="trch">第' + t.ch + '章</span><b>' + esc(t.title) + '</b><small>' + esc(t.sub) + '</small>' + stars3(s) + '</button>'; };
+  const best = m => Math.max(sp[m] || 0, m === 't60' ? (F.sprint || 0) : 0);
   return '<div class="stack"><h1 style="font-size:1.35rem">あそぶ</h1>' +
     '<section class="card sleepy"><h3>眠くなってきたら</h3><p>じっと読むのをやめて、手と目を動かすモードに切りかえましょう。1回1分から。</p><ul><li>立ち上がって、コードを声に出して読む</li><li>○×スプリントを1回だけ</li><li>25分やったら5分休む（休むのも学習のうち）</li></ul></section>' +
-    '<section class="card sprint-card"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><h2>○×スプリント</h2><p>60秒で、何問さばける？ 正解が続くとコンボ。</p></div><span class="bestbadge">ベスト<b>' + best + '</b></span></div><button class="btn wide" data-spgo>はじめる</button></section>' +
-    '<section class="card"><div class="row" style="gap:10px;margin-bottom:6px"><span class="flame" style="background:var(--brand-soft);color:var(--brand)">' + I.cpu + '</span><div><h3 style="font-size:1rem">なりきりCPU</h3><p class="small muted" style="margin:0">自分がコンピュータになって、コードを1行ずつ動かします。光っている行を見て答えるだけ。</p></div></div><div class="trgrid">' + TRACES.map(card).join('') + '</div></section></div>';
+    '<section class="card sprint-card"><h2>○×スプリント</h2><p>出てくる文が正しければ○、まちがいなら×。' + OX.length + '問の中から出題。</p><div class="bests">' + Object.keys(SPMODE).map(m => '<span>' + SPMODE[m].label + '<b>' + best(m) + '</b></span>').join('') + '</div><button class="btn wide" data-spsetup>はじめる</button></section>' +
+    '<section class="card"><div class="row" style="gap:10px;margin-bottom:8px"><span class="flame" style="background:var(--brand-soft);color:var(--brand)">' + I.cpu + '</span><div style="min-width:0"><h3 style="font-size:1rem">なりきりCPU</h3><p class="small muted" style="margin:0">自分がコンピュータになって、コードを1行ずつ動かします。全' + TRACES.length + '本。</p></div></div>' +
+    '<div class="trtotal"><span>集めた星</span><div class="bar"><i style="width:' + (got / max * 100) + '%"></i></div><b>★ ' + got + ' / ' + max + '</b></div>' +
+    '<div class="trgrid">' + TRACES.map(card).join('') + '</div></section></div>';
 }
 
 /* ---- ○×スプリント ---- */
-function sprintStart(){
-  SP = {phase:'count', n:3, deck:freshOX(), k:0, score:0, combo:0, maxc:0, right:0, wrong:0, miss:[], left:SPRINT_MS, last:null, prev:null};
-  view = 'sprint'; render(); window.scrollTo({top:0});
-  const tick = () => { if (!SP || view !== 'sprint') return; SP.n--; if (SP.n > 0) { render(); setTimeout(tick, 650); } else { SP.phase = 'play'; SP.t0 = performance.now(); render(); requestAnimationFrame(sprintLoop); } };
-  setTimeout(tick, 650);
+const oxKey = i => OX[i][1];
+function mix(a){ return a.map(v => [v, Math.random()]).sort((x, y) => x[1] - y[1]).map(x => x[0]); }
+function buildDeck(ch){
+  const pool = OX.map((_, i) => i).filter(i => !ch || OX[i][3] === ch);
+  const missed = new Set(funState().oxMiss || []);
+  const miss = mix(pool.filter(i => missed.has(oxKey(i)))).slice(0, 8);
+  const rest = mix(pool.filter(i => !miss.includes(i)));
+  const n = Math.max(0, 12 - miss.length);
+  return mix(miss.concat(rest.slice(0, n))).concat(rest.slice(n));
 }
-/* 前回まちがえた文を最大8つ、前半にまぜる。残りはシャッフル */
-function freshOX(){
-  const mix = a => a.map(v => [v, Math.random()]).sort((x, y) => x[1] - y[1]).map(x => x[0]);
-  const miss = mix((funState().oxMiss || []).filter(i => OX[i])).slice(0, 8);
-  const rest = mix(OX.map((_, i) => i).filter(i => !miss.includes(i)));
-  const head = mix(miss.concat(rest.slice(0, 12 - Math.min(12, miss.length))));
-  return head.concat(rest.slice(12 - Math.min(12, miss.length)));
+const bestKey = (m, ch) => m + (ch ? '-' + ch : '');
+function spBest(m, ch){ const F = funState(), sp = F.sp || {}; return Math.max(sp[bestKey(m, ch)] || 0, m === 't60' && !ch ? (F.sprint || 0) : 0); }
+function sprintSetup(){ SP = {phase:'setup'}; view = 'sprint'; render(); window.scrollTo({top:0}); }
+function sprintStart(deck, mode){
+  const m = mode || ui.sp.mode, ms = m === 'rev' ? 0 : SPMODE[m].ms;
+  SP = {phase:'count', n:3, mode:m, ch:m === 'rev' ? 0 : ui.sp.ch, deck:deck || buildDeck(ui.sp.ch), k:0, score:0, combo:0, maxc:0, right:0, wrong:0, miss:[], left:ms, limit:ms, prev:null, bonus:0};
+  view = 'sprint'; render(); window.scrollTo({top:0}); snd('tick');
+  const tick = () => { if (!SP || view !== 'sprint' || SP.phase !== 'count') return; SP.n--; if (SP.n > 0) { snd('tick'); render(); setTimeout(tick, 650); } else { snd('go'); SP.phase = 'play'; SP.t0 = performance.now(); render(); if (SP.limit) requestAnimationFrame(sprintLoop); } };
+  setTimeout(tick, 650);
 }
 function sprintLoop(t){
   if (!SP || SP.phase !== 'play' || view !== 'sprint') return;
   const dt = Math.min(100, t - SP.t0); SP.t0 = t; SP.left -= dt;
   const bar = document.getElementById('sptime'), sec = document.getElementById('spsec');
-  if (bar) bar.style.width = Math.max(0, SP.left / SPRINT_MS * 100) + '%';
+  if (bar) { bar.style.width = Math.max(0, Math.min(100, SP.left / SP.limit * 100)) + '%'; bar.classList.toggle('hurry', SP.left < 10000); }
   if (sec) sec.textContent = Math.max(0, Math.ceil(SP.left / 1000));
-  if (bar) bar.classList.toggle('hurry', SP.left < 10000);
   if (SP.left <= 0) { sprintEnd(); return; }
   requestAnimationFrame(sprintLoop);
 }
+function popText(t, cls){
+  const host = document.getElementById('sppop'); if (!host) return;
+  const el = document.createElement('span'); el.className = 'spfloat ' + (cls || ''); el.textContent = t; host.appendChild(el); setTimeout(() => el.remove(), 900);
+}
 function sprintAnswer(yes){
-  if (!SP || SP.phase !== 'play') return;
-  const idx = SP.deck[SP.k % SP.deck.length], it = OX[idx], ok = (it[0] === 1) === yes;
-  if (ok) { SP.combo++; SP.maxc = Math.max(SP.maxc, SP.combo); SP.right++; SP.score += 1 + Math.floor(SP.combo / 5); }
-  else { SP.combo = 0; SP.wrong++; if (!SP.miss.includes(idx)) SP.miss.push(idx); try { navigator.vibrate && navigator.vibrate(60); } catch(e) {} }
+  if (!SP || SP.phase !== 'play' || SP.lock) return;
+  const idx = SP.deck[SP.k % SP.deck.length], ok = (OX[idx][0] === 1) === yes;
+  if (ok) {
+    SP.combo++; SP.maxc = Math.max(SP.maxc, SP.combo); SP.right++;
+    const add = 1 + Math.floor(SP.combo / 5); SP.score += add;
+    if (SP.combo % 5 === 0) {
+      snd('combo');
+      if (SP.limit) { SP.left += 2000; SP.bonus += 2; popText('+2秒', 'time'); } else popText(SP.combo + ' コンボ！', 'time');
+    } else snd('ok');
+    popText('+' + add, add > 1 ? 'hot' : '');
+  } else {
+    SP.combo = 0; SP.wrong++; if (!SP.miss.includes(idx)) SP.miss.push(idx); snd('ng');
+    try { navigator.vibrate && navigator.vibrate(60); } catch(e) {}
+  }
   SP.prev = {idx, ok}; SP.k++;
+  if (!ok && SP.mode === 'sd') { SP.lock = true; paintSprint(false, true); setTimeout(sprintEnd, 900); return; }
+  if (!SP.limit && SP.k >= SP.deck.length) { SP.lock = true; paintSprint(ok, true); setTimeout(sprintEnd, 500); return; }
   paintSprint(ok);
 }
+function rankOf(m, s){ const r = RANK_AT[m] || RANK_AT.t60; let k = 0; r.forEach((v, j) => { if (s >= v) k = j; }); return {k, name:RANKS[k], next:r[k + 1]}; }
 function sprintEnd(){
-  const F = funState(), was = F.sprint || 0;
-  SP.phase = 'end'; SP.newBest = SP.score > was;
-  F.sprint = Math.max(was, SP.score);
-  const keep = (F.oxMiss || []).filter(i => !SP.deck.slice(0, SP.k).includes(i) || SP.miss.includes(i));
-  F.oxMiss = [...new Set(keep.concat(SP.miss))].slice(-20);
-  SP.gain = SP.right * 2 + 5; const lvB = level(P.xp).L; funDone(SP.gain); save();
+  if (!SP || SP.phase === 'end') return;
+  const F = funState(); SP.phase = 'end'; snd('end');
+  const total = SP.right + SP.wrong;
+  if (SP.mode !== 'rev') {
+    const key = bestKey(SP.mode, SP.ch), was = spBest(SP.mode, SP.ch);
+    F.sp = F.sp || {}; SP.was = was; SP.newBest = SP.score > was && SP.score > 0;
+    F.sp[key] = Math.max(was, SP.score); if (key === 't60') F.sprint = F.sp.t60;
+    F.spLog = (F.spLog || []).concat({t:Date.now(), m:key, s:SP.score}).slice(-30);
+  }
+  const answered = SP.deck.slice(0, SP.k).map(oxKey), missKeys = SP.miss.map(oxKey);
+  F.oxMiss = [...new Set((F.oxMiss || []).filter(k => typeof k === 'string' && (!answered.includes(k) || missKeys.includes(k))).concat(missKeys))].slice(-30);
+  SP.perfect = SP.mode === 'sd' && SP.wrong === 0 && total > 0;
+  SP.gain = SP.right * 2 + (total ? 5 : 0); const lvB = level(P.xp).L; if (total) { funDone(SP.gain); save(); }
   render(); window.scrollTo({top:0});
-  if (SP.newBest || SP.right >= 10) burst();
+  if (SP.newBest || SP.perfect || SP.right >= 10) burst();
   const lv = level(P.xp).L; if (lv > lvB) setTimeout(() => levelUp(lv), 700);
 }
+function sprintSetupHTML(){
+  const s = ui.sp, F = funState(), key = bestKey(s.mode, s.ch);
+  const log = (F.spLog || []).filter(x => x.m === key).slice(-10), mx = Math.max(5, ...log.map(x => x.s));
+  const cnt = OX.filter(o => !s.ch || o[3] === s.ch).length;
+  return '<div class="stack"><div class="row" style="gap:10px"><button class="qclose" data-go="fun" aria-label="もどる">' + I.x + '</button><h1 style="font-size:1.3rem">○×スプリント</h1></div>' +
+    '<section class="card"><h3 class="h3s">遊び方</h3><div class="kind">' + Object.keys(SPMODE).map(m => '<button data-spmode="' + m + '" aria-pressed="' + (s.mode === m) + '"><span class="flame" style="background:var(--find-soft);color:var(--find)">' + (m === 'sd' ? I.flame.replace('var(--xp)', 'currentColor') : I.clock) + '</span><span><b>' + SPMODE[m].label + '</b><small>' + SPMODE[m].sub + '</small></span><span class="kbest">ベスト ' + spBest(m, s.ch) + '</span></button>').join('') + '</div></section>' +
+    '<section class="card"><h3 class="h3s">出題する分野 <span class="small muted">（' + cnt + '問）</span></h3><div class="chips"><button class="chip" data-spch="0" aria-pressed="' + (!s.ch) + '">おまかせ</button>' + Object.keys(CH).map(n => '<button class="chip" data-spch="' + n + '" aria-pressed="' + (s.ch === +n) + '">' + n + ' ' + esc(CH[n]) + '</button>').join('') + '</div></section>' +
+    (log.length ? '<section class="card"><h3 class="h3s">最近の記録 <span class="small muted">（' + esc(SPMODE[s.mode].label) + (s.ch ? '・第' + s.ch + '章' : '') + '）</span></h3><div class="splog">' + log.map(x => '<div><i style="height:' + Math.max(4, x.s / mx * 100) + '%"></i><span>' + x.s + '</span></div>').join('') + '</div></section>' : '') +
+    '<div class="row" style="justify-content:space-between"><span class="small muted">効果音</span><button class="toggle" data-spsound aria-pressed="' + soundOn + '"><span>' + (soundOn ? 'オン' : 'オフ') + '</span></button></div>' +
+    '<button class="btn cta wide spstart" data-spgo>スタート</button></div>';
+}
 function sprintHTML(){
-  if (SP.phase === 'count') return '<div class="spwrap"><div class="countdown" aria-live="polite">' + SP.n + '</div><p class="muted" style="text-align:center">正しければ ○、まちがいなら ×</p></div>';
+  if (SP.phase === 'setup') return sprintSetupHTML();
+  if (SP.phase === 'count') return '<div class="spwrap"><div class="countdown" aria-live="polite">' + SP.n + '</div><p class="muted" style="text-align:center">' + (SP.mode === 'sd' ? '1回まちがえたら終わり。慎重に！' : SP.mode === 'rev' ? 'まちがえた文だけをもう一度' : '正しければ ○、まちがいなら ×') + '</p></div>';
   if (SP.phase === 'end') {
-    const acc = SP.right + SP.wrong ? Math.round(SP.right / (SP.right + SP.wrong) * 100) : 0;
-    return '<div class="stack"><section class="card big"><div class="num">' + SP.score + '<span style="font-size:1.1rem;color:var(--muted)"> 点</span></div><h1>' + (SP.newBest ? 'ベスト更新！' : SP.right + '問 正解！') + '</h1><p class="muted" style="margin:4px 0 0">60秒、おつかれさまでした。眠気、少し飛びましたか？</p></section>' +
-      '<section class="done-list">' + doneItem(I.check, 'var(--ok-soft)', 'var(--ok)', '正解', SP.right + '問（' + acc + '%）') + doneItem(I.flame, 'var(--xp-soft)', 'var(--xp)', '最大コンボ', SP.maxc) + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + SP.gain) + '</section>' +
-      (SP.miss.length ? '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">今回の発見（次回は少し多めに出ます）</h3><div class="oxmiss">' + SP.miss.map(i => '<div><span class="oxmark ' + (OX[i][0] ? 'o' : 'x') + '" aria-label="答え ' + (OX[i][0] ? '○' : '×') + '">' + (OX[i][0] ? MARK.o(16) : MARK.x(16)) + '</span><div><b>' + esc(OX[i][1]) + '</b><span>' + esc(OX[i][2]) + '</span></div></div>').join('') + '</div></section>' : '') +
-      '<button class="btn cta wide" data-spgo>もう1回</button><button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
+    const total = SP.right + SP.wrong, acc = total ? Math.round(SP.right / total * 100) : 0, R = rankOf(SP.mode, SP.score);
+    const head = SP.mode === 'rev' ? (SP.wrong ? '復習完了' : '全部クリア！') : SP.perfect ? 'パーフェクト！' : SP.newBest ? 'ベスト更新！' : R.name;
+    const msg = SP.mode === 'rev' ? 'まちがえた文を ' + SP.right + ' / ' + total + ' 問クリアしました。' : SP.mode === 'sd' ? (SP.perfect ? 'この分野の文をノーミスで全部さばきました。' : SP.right + '問 連続で正解しました。') : '眠気、少し飛びましたか？';
+    const rank = SP.mode === 'rev' ? '' : '<div class="rankline"><span class="rank r' + R.k + '">' + esc(R.name) + '</span>' + (R.next !== undefined ? '<span class="small muted">次のランクまで あと ' + (R.next - SP.score) + '点</span>' : '<span class="small muted">最高ランク！</span>') + '</div>';
+    return '<div class="stack"><section class="card big"><div class="num">' + SP.score + '<span style="font-size:1.1rem;color:var(--muted)"> 点</span></div><h1>' + esc(head) + '</h1><p class="muted" style="margin:4px 0 0">' + esc(msg) + '</p>' + rank + '</section>' +
+      '<section class="done-list">' + doneItem(I.check, 'var(--ok-soft)', 'var(--ok)', '正解', SP.right + '問（' + acc + '%）') + doneItem(I.flame, 'var(--xp-soft)', 'var(--xp)', '最大コンボ', SP.maxc) + (SP.bonus ? doneItem(I.clock, 'var(--find-soft)', 'var(--find)', 'コンボで延長した時間', '+' + SP.bonus + '秒') : '') + (SP.mode !== 'rev' ? doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'この遊び方のベスト', Math.max(SP.was || 0, SP.score) + '点') : '') + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + SP.gain) + '</section>' +
+      (SP.miss.length ? '<section class="card"><h3 class="h3s">今回の発見（次回は少し多めに出ます）</h3><div class="oxmiss">' + SP.miss.map(i => '<div><span class="oxmark ' + (OX[i][0] ? 'o' : 'x') + '" aria-label="答え ' + (OX[i][0] ? '○' : '×') + '">' + (OX[i][0] ? MARK.o(16) : MARK.x(16)) + '</span><div><b>' + esc(OX[i][1]) + '</b><span>' + esc(OX[i][2]) + '</span></div></div>').join('') + '</div></section>' +
+        '<button class="btn wide" data-sprev>まちがえた ' + SP.miss.length + '問だけ、もう一度</button>' : '') +
+      '<button class="btn cta wide" data-spgo>もう1回（' + esc(SP.mode === 'rev' ? SPMODE[ui.sp.mode].label : SPMODE[SP.mode].label) + '）</button><button class="btn ghost wide" data-spsetup>遊び方・分野を変える</button><button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
   }
-  return '<div class="spwrap"><div class="sphead"><button class="qclose" data-spquit aria-label="やめる">' + I.x + '</button><div class="sptimer"><i id="sptime" style="width:' + (SP.left / SPRINT_MS * 100) + '%"></i></div><span class="spsec" id="spsec">' + Math.ceil(SP.left / 1000) + '</span></div>' +
+  const timed = !!SP.limit;
+  return '<div class="spwrap"><div class="sphead"><button class="qclose" data-spquit aria-label="やめる">' + I.x + '</button>' +
+    (timed ? '<div class="sptimer"><i id="sptime" style="width:' + Math.min(100, SP.left / SP.limit * 100) + '%"></i></div><span class="spsec" id="spsec">' + Math.ceil(SP.left / 1000) + '</span>' : '<div class="spmode">' + (SP.mode === 'sd' ? 'サドンデス' : '復習') + '　<b id="spcount"></b></div>') +
+    '<span class="sppop" id="sppop" aria-hidden="true"></span></div>' +
     '<div class="spscore"><span>スコア <b id="spsc">' + SP.score + '</b></span><span class="combo" id="spcombo"></span></div>' +
     '<div class="spcard" id="spcard"></div>' +
     '<div class="spbtns"><button class="spb o" data-spa="1" aria-label="正しい（○）">' + MARK.o(52) + '</button><button class="spb x" data-spa="0" aria-label="まちがい（×）">' + MARK.x(52) + '</button></div>' +
     '<div class="spprev" id="spprev" aria-live="polite"></div></div>';
 }
-function paintSprint(flash){
+function paintSprint(flash, keep){
   const card = document.getElementById('spcard'); if (!card) return;
-  const it = OX[SP.deck[SP.k % SP.deck.length]];
-  card.textContent = it[1];
+  const idx = keep && SP.prev ? SP.prev.idx : SP.deck[SP.k % SP.deck.length];
+  card.innerHTML = '<span class="chtag">第' + OX[idx][3] + '章</span><span>' + esc(OX[idx][1]) + '</span>';
   card.classList.remove('good', 'bad'); void card.offsetWidth;
   if (flash !== undefined) card.classList.add(flash ? 'good' : 'bad');
   document.getElementById('spsc').textContent = SP.score;
+  const cnt = document.getElementById('spcount'); if (cnt) cnt.textContent = SP.mode === 'rev' ? Math.min(SP.k + 1, SP.deck.length) + ' / ' + SP.deck.length : SP.right + '問 連続';
   const c = document.getElementById('spcombo'); c.textContent = SP.combo >= 2 ? SP.combo + ' コンボ！' : ''; c.classList.toggle('hot', SP.combo >= 5);
   const pv = document.getElementById('spprev');
   if (SP.prev) { const p = OX[SP.prev.idx]; pv.className = 'spprev ' + (SP.prev.ok ? 'ok' : 'ng'); pv.innerHTML = '<b>' + (SP.prev.ok ? 'せいかい' : 'おしい') + '　答えは ' + (p[0] ? '○' : '×') + '</b>' + esc(p[2]); }
@@ -6683,54 +6989,70 @@ function paintSprint(flash){
 /* ---- なりきりCPU ---- */
 function traceStart(id){
   const p = TRACES.find(t => t.id === id); if (!p) return;
-  TR = {p, i:-1, vars:{}, out:'', changed:[], asks:0, right:0, answered:null, ord:null};
-  view = 'trace'; traceNext(); window.scrollTo({top:0});
+  TR = {p, i:-1, vars:{}, old:{}, out:'', changed:[], asks:0, right:0, answered:null, ord:null};
+  view = 'trace'; render(); window.scrollTo({top:0});
 }
-function applyVars(o){ if (!o) return []; const ch = []; Object.entries(o).forEach(([k, v]) => { if (v === null) delete TR.vars[k]; else { TR.vars[k] = v; ch.push(k); } }); return ch; }
+function applyVars(o){
+  TR.old = {}; if (!o) return [];
+  const ch = [];
+  Object.entries(o).forEach(([k, v]) => { if (v === null) delete TR.vars[k]; else { if (k in TR.vars && TR.vars[k] !== v) TR.old[k] = TR.vars[k]; TR.vars[k] = v; ch.push(k); } });
+  return ch;
+}
 function traceNext(){
   TR.i++;
   if (TR.i >= TR.p.steps.length) { traceEnd(); return; }
   const st = TR.p.steps[TR.i];
   TR.changed = applyVars(st.pre); TR.answered = null;
-  if (st.ask) TR.ord = st.ask.o.map((_, j) => j).sort(() => Math.random() - .5);
+  if (st.ask) TR.ord = mix(st.ask.o.map((_, j) => j));
   else if (st.out) TR.out += st.out;
   render();
+  const now = document.querySelector('.trcode .now'); if (now && now.scrollIntoView) { const r = now.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight * .6) now.scrollIntoView({block:'center', behavior:'smooth'}); }
 }
 function traceAnswer(j){
   const st = TR.p.steps[TR.i]; if (!st.ask || TR.answered) return;
   const ok = j === 0; TR.asks++; if (ok) TR.right++;
-  TR.answered = {j, ok};
+  TR.answered = {j, ok}; snd(ok ? 'ok' : 'ng');
   TR.changed = applyVars(st.post); if (st.out) TR.out += st.out;
   render();
   if (ok) { const el = document.querySelector('.tropt.right'); if (el) el.classList.add('pop'); }
+  const nx = document.querySelector('[data-trnext]'); if (nx) { const r = nx.getBoundingClientRect(); if (r.bottom > innerHeight) nx.scrollIntoView({block:'end', behavior:'smooth'}); }
 }
 function traceEnd(){
   const F = funState(); F.trace = F.trace || {};
   const r = TR.asks ? TR.right / TR.asks : 1, s = r >= .95 ? 3 : r >= .7 ? 2 : 1;
-  TR.stars = s; TR.best = s > (F.trace[TR.p.id] || 0); F.trace[TR.p.id] = Math.max(F.trace[TR.p.id] || 0, s);
+  TR.stars = s; TR.prevStars = F.trace[TR.p.id] || 0; F.trace[TR.p.id] = Math.max(TR.prevStars, s);
   TR.gain = TR.right * 4 + 5; const lvB = level(P.xp).L; funDone(TR.gain); save();
-  TR.done = true; render(); window.scrollTo({top:0}); if (s === 3) burst();
+  TR.done = true; snd('end'); render(); window.scrollTo({top:0}); if (s === 3) burst();
   const lv = level(P.xp).L; if (lv > lvB) setTimeout(() => levelUp(lv), 700);
 }
 function traceHTML(){
-  const p = TR.p;
+  const p = TR.p, top = '<div class="row" style="gap:10px"><button class="qclose" data-go="fun" aria-label="やめる">' + I.x + '</button><div style="flex:1;min-width:0"><span class="trch">第' + p.ch + '章 ' + esc(CH[p.ch]) + '</span><b style="font-family:var(--f-display);display:block">' + esc(p.title) + '</b>';
+  if (TR.i < 0) {
+    const asks = p.steps.filter(s => s.ask).length, best = (funState().trace || {})[p.id] || 0;
+    return '<div class="stack trwrap">' + top + '</div></div>' +
+      '<section class="card trintro"><p class="trgoal">' + I.cpu + '<span><b>このコードのポイント</b>' + esc(p.sub) + '</span></p><pre class="code trcode">' + p.code.map(l => '<span class="l">' + esc(l) + '</span>').join('') + '</pre>' +
+      '<ul class="trhow"><li>光っている行が「いま実行している行」</li><li>右下の「変数」と「画面」が、1行ごとに変わっていきます</li><li>質問は ' + asks + ' 個。まちがえても最後まで進めます</li></ul>' +
+      (best ? '<p class="small muted" style="margin:0">これまでの星 ' + stars3(best) + '</p>' : '') + '</section>' +
+      '<button class="btn cta wide" data-trnext>動かしてみる</button></div>';
+  }
   if (TR.done) {
-    const nx = TRACES[(TRACES.indexOf(p) + 1) % TRACES.length];
-    return '<div class="stack"><section class="card big"><div class="stars big" aria-label="星 ' + TR.stars + ' / 3">' + [1,2,3].map(k => '<i class="' + (k <= TR.stars ? 'on' : '') + '">★</i>').join('') + '</div><h1>実行完了！</h1><p class="muted" style="margin:4px 0 0">' + esc(p.title) + ' を最後まで動かしました。' + TR.right + ' / ' + TR.asks + ' 問正解。</p></section>' +
-      '<section class="card"><h3 style="font-size:.95rem;margin-bottom:8px">画面に出たもの</h3><div class="console">' + esc(TR.out) + '</div></section>' +
-      '<section class="done-list">' + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + TR.gain) + '</section>' +
-      '<button class="btn cta wide" data-trstart="' + nx.id + '">次のコード：' + esc(nx.title) + '</button><button class="btn ghost wide" data-trstart="' + p.id + '">もう一度</button><button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
+    const idx = TRACES.indexOf(p), nx = TRACES[(idx + 1) % TRACES.length];
+    const F = funState(), got = TRACES.reduce((a, t) => a + ((F.trace || {})[t.id] || 0), 0);
+    return '<div class="stack"><section class="card big">' + stars3(TR.stars, true) + '<h1>実行完了！</h1><p class="muted" style="margin:4px 0 0">' + esc(p.title) + ' を最後まで動かしました。質問 ' + TR.right + ' / ' + TR.asks + ' 問正解。' + (TR.stars > TR.prevStars && TR.prevStars ? '星が増えました！' : '') + '</p></section>' +
+      '<section class="card"><h3 class="h3s">画面に出たもの</h3><div class="console">' + esc(TR.out) + '</div></section>' +
+      '<section class="done-list">' + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', 'もらった経験値', '+' + TR.gain) + doneItem(I.star, 'var(--xp-soft)', 'var(--xp)', '集めた星', got + ' / ' + TRACES.length * 3) + '</section>' +
+      '<button class="btn cta wide" data-trstart="' + nx.id + '">次のコード：' + esc(nx.title) + '</button>' + (TR.stars < 3 ? '<button class="btn wide" data-trstart="' + p.id + '">もう一度（星3つをねらう）</button>' : '') + '<button class="btn ghost wide" data-go="fun">あそぶ にもどる</button></div>';
   }
   const st = p.steps[TR.i], vk = Object.keys(TR.vars);
   const code = '<pre class="code trcode">' + p.code.map((l, k) => '<span class="l' + (k === st.l ? ' now' : '') + '">' + esc(l) + '</span>').join('') + '</pre>';
-  const vars = '<div class="vars">' + (vk.length ? vk.map(k => '<div class="var' + (TR.changed.includes(k) ? ' chg' : '') + '"><span>' + esc(k) + '</span><b>' + esc(TR.vars[k]) + '</b></div>').join('') : '<span class="small muted">まだ変数はありません</span>') + '</div>';
+  const vars = '<div class="vars">' + (vk.length ? vk.map(k => '<div class="var' + (TR.changed.includes(k) ? ' chg' : '') + '"><span>' + esc(k) + '</span><b>' + (k in TR.old ? '<s>' + esc(TR.old[k]) + '</s><em>→</em>' : '') + esc(TR.vars[k]) + '</b></div>').join('') : '<span class="small muted">まだありません</span>') + '</div>';
   let act = '';
   if (st.ask) {
     act = '<p class="trq">' + esc(st.ask.q) + '</p><div class="tropts">' + TR.ord.map(j => { let c = 'tropt'; if (TR.answered) { if (j === 0) c += ' right'; else if (j === TR.answered.j) c += ' wrong'; } return '<button class="' + c + '" data-tra="' + j + '"' + (TR.answered ? ' disabled' : '') + '>' + esc(st.ask.o[j]) + '</button>'; }).join('') + '</div>';
-    if (TR.answered) act += '<div class="trwhy ' + (TR.answered.ok ? 'ok' : 'ng') + '"><b>' + (TR.answered.ok ? 'そのとおり！' : '正解は「' + esc(st.ask.o[0]) + '」') + '</b>' + esc(st.ask.why) + '</div><button class="btn cta wide" data-trnext>次の行へ</button>';
-  } else act = '<button class="btn cta wide" data-trnext>次の行へ</button>';
+    if (TR.answered) act += '<div class="trwhy ' + (TR.answered.ok ? 'ok' : 'ng') + '"><b>' + (TR.answered.ok ? 'そのとおり！' : '正解は「' + esc(st.ask.o[0]) + '」') + '</b>' + esc(st.ask.why) + '</div><button class="btn cta wide" data-trnext>' + (TR.i === p.steps.length - 1 ? '結果を見る' : '次の行へ') + '</button>';
+  } else act = '<button class="btn cta wide" data-trnext>' + (TR.i === p.steps.length - 1 ? '結果を見る' : '次の行へ') + '</button>';
   const prog = Math.round(TR.i / p.steps.length * 100);
-  return '<div class="stack trwrap"><div class="row" style="gap:10px"><button class="qclose" data-go="fun" aria-label="やめる">' + I.x + '</button><div style="flex:1;min-width:0"><b style="font-family:var(--f-display)">' + esc(p.title) + '</b><div class="exprog" style="margin-top:4px"><i style="width:' + prog + '%"></i></div></div></div>' +
+  return '<div class="stack trwrap">' + top + '<div class="exprog" style="margin-top:4px"><i style="width:' + prog + '%"></i></div></div><span class="trscore">' + TR.right + ' / ' + TR.asks + '</span></div>' +
     code +
     (st.say ? '<p class="trsay">' + I.cpu + '<span>' + esc(st.say) + '</span></p>' : '') +
     '<div class="trstate"><div><h4>変数</h4>' + vars + '</div><div><h4>画面</h4><div class="console">' + (TR.out ? esc(TR.out) : '<span class="muted">（まだ何も出ていない）</span>') + '<i class="caret"></i></div></div></div>' +
@@ -6739,7 +7061,12 @@ function traceHTML(){
 
 document.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
+  if (b.hasAttribute('data-spsetup')) { snd('tick'); sprintSetup(); return; }
+  if (b.dataset.spmode) { ui.sp.mode = b.dataset.spmode; setPref('sp', ui.sp); render(); return; }
+  if (b.dataset.spch !== undefined) { ui.sp.ch = +b.dataset.spch; setPref('sp', ui.sp); render(); return; }
+  if (b.hasAttribute('data-spsound')) { soundOn = !soundOn; setPref('sound', soundOn); render(); snd('ok'); return; }
   if (b.hasAttribute('data-spgo')) { sprintStart(); return; }
+  if (b.hasAttribute('data-sprev')) { sprintStart(mix(SP.miss.slice()), 'rev'); return; }
   if (b.dataset.spa !== undefined) { sprintAnswer(b.dataset.spa === '1'); return; }
   if (b.hasAttribute('data-spquit')) { SP = null; view = 'fun'; render(); return; }
   if (b.dataset.trstart) { traceStart(b.dataset.trstart); return; }
